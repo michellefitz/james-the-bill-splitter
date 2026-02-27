@@ -975,7 +975,7 @@ export default function App() {
               </div>
 
               {/* ── Summary ───────────────────────────────────────────── */}
-              <div style={{ padding: '20px 0' }}>
+              <div style={{ padding: '20px 0', borderTop: '2px solid #1C1710' }}>
                 <div
                   style={{
                     fontSize: '9px',
