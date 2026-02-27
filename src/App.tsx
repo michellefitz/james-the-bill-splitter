@@ -328,7 +328,7 @@ export default function App() {
   const handleAddPerson = (e?: React.FormEvent) => {
     e?.preventDefault();
     const name = newPersonName.trim();
-    if (!name) return;
+    if (!name || people.length >= 50) return;
     if (!people.includes(name)) {
       setPeople((prev) => [...prev, name]);
       if (!selectedPerson) setSelectedPerson(name);
@@ -674,7 +674,7 @@ export default function App() {
               />
               <button
                 type="submit"
-                disabled={!newPersonName.trim()}
+                disabled={!newPersonName.trim() || people.length >= 50}
                 style={{
                   padding: '9px 18px',
                   fontSize: '11px',
@@ -682,9 +682,9 @@ export default function App() {
                   fontWeight: 700,
                   fontFamily: '"IBM Plex Mono", monospace',
                   border: 'none',
-                  background: newPersonName.trim() ? '#1C1710' : rule,
-                  color: newPersonName.trim() ? '#F7F2E8' : inkLight,
-                  cursor: newPersonName.trim() ? 'pointer' : 'default',
+                  background: newPersonName.trim() && people.length < 50 ? '#1C1710' : rule,
+                  color: newPersonName.trim() && people.length < 50 ? '#F7F2E8' : inkLight,
+                  cursor: newPersonName.trim() && people.length < 50 ? 'pointer' : 'default',
                   transition: 'all 0.15s',
                   borderRadius: '2px',
                   flexShrink: 0,
