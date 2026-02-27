@@ -178,6 +178,29 @@ const SharedReceiptView = ({ data }: { data: SharedReceiptData }) => {
           <div style={{ fontSize: '9px', letterSpacing: '0.3em', textTransform: 'uppercase', color: inkLight, lineHeight: '1.8' }}>
             ★ THANK YOU ★ PLEASE COME AGAIN ★<br />POWERED BY JAMES v1.0
           </div>
+          <div style={{ marginTop: '16px' }}>
+            <a
+              href="https://buy.stripe.com/6oUbIUecKd1e2YU7z15wI00"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: 'inline-block',
+                padding: '8px 20px',
+                fontSize: '9px',
+                letterSpacing: '0.2em',
+                textTransform: 'uppercase',
+                fontWeight: 700,
+                fontFamily: '"IBM Plex Mono", monospace',
+                border: `1px solid ${rule}`,
+                background: 'transparent',
+                color: inkLight,
+                textDecoration: 'none',
+                transition: 'all 0.15s',
+              }}
+            >
+              ♥ TIP THE DEVELOPER
+            </a>
+          </div>
         </div>
 
         {/* ── Viral CTA ─────────────────────────────────────────────────── */}
@@ -1419,6 +1442,29 @@ export default function App() {
             ★ THANK YOU ★ PLEASE COME AGAIN ★
             <br />
             POWERED BY JAMES v1.0
+          </div>
+          <div style={{ marginTop: '16px' }}>
+            <a
+              href="https://buy.stripe.com/6oUbIUecKd1e2YU7z15wI00"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: 'inline-block',
+                padding: '8px 20px',
+                fontSize: '9px',
+                letterSpacing: '0.2em',
+                textTransform: 'uppercase',
+                fontWeight: 700,
+                fontFamily: '"IBM Plex Mono", monospace',
+                border: `1px solid ${rule}`,
+                background: 'transparent',
+                color: inkLight,
+                textDecoration: 'none',
+                transition: 'all 0.15s',
+              }}
+            >
+              ♥ TIP THE DEVELOPER
+            </a>
           </div>
         </div>
 
