@@ -541,25 +541,27 @@ export default function App() {
               {receipt?.restaurantName || 'AWAITING RECEIPT'}
             </h1>
           </div>
-          <button
-            onClick={() => fileInputRef.current?.click()}
-            disabled={isUploading}
-            style={{
-              padding: '8px 20px',
-              fontSize: '10px',
-              letterSpacing: '0.2em',
-              textTransform: 'uppercase',
-              fontWeight: 700,
-              fontFamily: '"IBM Plex Mono", monospace',
-              border: `1px solid ${receipt ? '#1C1710' : rule}`,
-              background: receipt ? '#1C1710' : 'transparent',
-              color: receipt ? '#F7F2E8' : inkMid,
-              cursor: 'pointer',
-              transition: 'all 0.15s',
-            }}
-          >
-            {isUploading ? '[ READING... ]' : receipt ? '[ SCAN NEW RECEIPT ]' : '[ SCAN RECEIPT ]'}
-          </button>
+          {receipt && (
+            <button
+              onClick={() => fileInputRef.current?.click()}
+              disabled={isUploading}
+              style={{
+                padding: '8px 20px',
+                fontSize: '10px',
+                letterSpacing: '0.2em',
+                textTransform: 'uppercase',
+                fontWeight: 700,
+                fontFamily: '"IBM Plex Mono", monospace',
+                border: `1px solid #1C1710`,
+                background: '#1C1710',
+                color: '#F7F2E8',
+                cursor: 'pointer',
+                transition: 'all 0.15s',
+              }}
+            >
+              {isUploading ? '[ READING... ]' : '[ SCAN NEW RECEIPT ]'}
+            </button>
+          )}
           <input
             type="file"
             ref={fileInputRef}
@@ -707,19 +709,36 @@ export default function App() {
 
           {/* ── No receipt state ────────────────────────────────────────── */}
           {!receipt ? (
-            <div
-              style={{
-                padding: '60px 0',
-                textAlign: 'center',
-              }}
-            >
-              <div style={{ fontSize: '32px', marginBottom: '12px', color: inkLight }}>↑</div>
-              <div style={{ fontSize: '10px', letterSpacing: '0.25em', color: inkLight }}>
-                SCAN A RECEIPT ABOVE
+            <div style={{ padding: '60px 0', textAlign: 'center' }}>
+              <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '28px' }}>
+                <svg width="52" height="68" viewBox="0 0 40 54" fill="none">
+                  <rect x="0" y="0" width="40" height="46" fill="#EDE6D5" rx="1"/>
+                  <path d="M0 46 L5 53 L10 46 L15 53 L20 46 L25 53 L30 46 L35 53 L40 46 Z" fill="#EDE6D5"/>
+                  <rect x="7" y="9"  width="26" height="2" fill={inkLight} rx="1"/>
+                  <rect x="7" y="16" width="18" height="2" fill={inkLight} rx="1"/>
+                  <rect x="7" y="23" width="22" height="2" fill={inkLight} rx="1"/>
+                  <rect x="7" y="30" width="14" height="2" fill={inkLight} rx="1"/>
+                  <rect x="7" y="37" width="26" height="2" fill={inkMid}   rx="1"/>
+                </svg>
               </div>
-              <div style={{ fontSize: '9px', letterSpacing: '0.15em', color: inkLight, marginTop: '4px' }}>
-                SUPPORTS JPG, PNG, HEIC
-              </div>
+              <button
+                onClick={() => fileInputRef.current?.click()}
+                disabled={isUploading}
+                style={{
+                  padding: '10px 28px',
+                  fontSize: '10px',
+                  letterSpacing: '0.2em',
+                  textTransform: 'uppercase',
+                  fontWeight: 700,
+                  fontFamily: '"IBM Plex Mono", monospace',
+                  border: `1px solid #1C1710`,
+                  background: '#1C1710',
+                  color: '#F7F2E8',
+                  cursor: 'pointer',
+                }}
+              >
+                [ SCAN RECEIPT ]
+              </button>
             </div>
           ) : (
             <>
