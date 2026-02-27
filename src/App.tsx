@@ -11,15 +11,6 @@ function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-// Muted pastel colors — subtle, don't compete with the ink
-const PERSON_COLORS = [
-  { bg: '#C4826A', text: '#F7F2E8' },  // dusty salmon
-  { bg: '#6A8FAA', text: '#F7F2E8' },  // steel blue
-  { bg: '#7A9A7A', text: '#F7F2E8' },  // soft sage
-  { bg: '#AA8A5A', text: '#F7F2E8' },  // warm tan
-  { bg: '#9A7AAA', text: '#F7F2E8' },  // muted lavender
-  { bg: '#6A9A8A', text: '#F7F2E8' },  // seafoam
-];
 
 // Compact share encoding — short keys + URL-safe base64
 function encodeShareData(data: SharedReceiptData): string {
@@ -71,10 +62,6 @@ function formatCurrency(code: string): string {
   return CURRENCY_SYMBOLS[code?.toUpperCase()] ?? code ?? '$';
 }
 
-function getPersonColor(person: string, people: string[]) {
-  const idx = people.indexOf(person);
-  return PERSON_COLORS[(idx >= 0 ? idx : 0) % PERSON_COLORS.length];
-}
 
 const JamesIcon = ({ size = 24, className = '' }: { size?: number; className?: string }) => (
   <img
@@ -697,7 +684,6 @@ export default function App() {
             {people.length > 0 && (
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
                 {people.map((person) => {
-                  const color = getPersonColor(person, people);
                   const isSelected = selectedPerson === person;
                   return (
                     <button
@@ -710,9 +696,9 @@ export default function App() {
                         textTransform: 'uppercase',
                         fontWeight: 700,
                         fontFamily: '"IBM Plex Mono", monospace',
-                        background: isSelected ? color.bg : 'transparent',
-                        color: isSelected ? color.text : color.bg,
-                        border: `1.5px solid ${color.bg}`,
+                        background: isSelected ? '#1C1710' : 'transparent',
+                        color: isSelected ? '#F7F2E8' : '#1C1710',
+                        border: `1.5px solid #1C1710`,
                         cursor: 'pointer',
                         outline: 'none',
                         transition: 'all 0.15s',
@@ -742,7 +728,7 @@ export default function App() {
                     letterSpacing: '0.2em',
                     textTransform: 'uppercase',
                     fontWeight: 700,
-                    color: getPersonColor(selectedPerson, people).bg,
+                    color: amber,
                   }}
                 >
                   ▸ TAP ITEMS BELOW TO ASSIGN {selectedPerson.toUpperCase()}
@@ -918,56 +904,53 @@ export default function App() {
                             }}
                           >
                             <AnimatePresence mode="popLayout">
-                              {assignment?.people.map((person) => {
-                                const color = getPersonColor(person, people);
-                                return (
-                                  <motion.span
-                                    key={person}
-                                    initial={{ scale: 0.8, opacity: 0 }}
-                                    animate={{ scale: 1, opacity: 1 }}
-                                    exit={{ scale: 0.8, opacity: 0 }}
+                              {assignment?.people.map((person) => (
+                                <motion.span
+                                  key={person}
+                                  initial={{ scale: 0.8, opacity: 0 }}
+                                  animate={{ scale: 1, opacity: 1 }}
+                                  exit={{ scale: 0.8, opacity: 0 }}
+                                  style={{
+                                    padding: '2px 8px',
+                                    fontSize: '9px',
+                                    letterSpacing: '0.15em',
+                                    textTransform: 'uppercase',
+                                    fontWeight: 700,
+                                    background: 'transparent',
+                                    color: inkMid,
+                                    border: `1px solid ${rule}`,
+                                    display: 'inline-flex',
+                                    alignItems: 'center',
+                                    gap: '5px',
+                                  }}
+                                >
+                                  {person}
+                                  <button
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      setAssignments((prev) =>
+                                        prev.map((a) =>
+                                          a.itemId === item.id
+                                            ? { ...a, people: a.people.filter((p) => p !== person) }
+                                            : a
+                                        )
+                                      );
+                                    }}
                                     style={{
-                                      padding: '2px 8px',
-                                      fontSize: '9px',
-                                      letterSpacing: '0.15em',
-                                      textTransform: 'uppercase',
-                                      fontWeight: 700,
-                                      background: color.bg,
-                                      color: color.text,
-                                      display: 'inline-flex',
-                                      alignItems: 'center',
-                                      gap: '5px',
+                                      background: 'none',
+                                      border: 'none',
+                                      color: inkLight,
+                                      cursor: 'pointer',
+                                      padding: 0,
+                                      fontSize: '11px',
+                                      lineHeight: 1,
+                                      fontFamily: '"IBM Plex Mono", monospace',
                                     }}
                                   >
-                                    {person}
-                                    <button
-                                      onClick={(e) => {
-                                        e.stopPropagation();
-                                        setAssignments((prev) =>
-                                          prev.map((a) =>
-                                            a.itemId === item.id
-                                              ? { ...a, people: a.people.filter((p) => p !== person) }
-                                              : a
-                                          )
-                                        );
-                                      }}
-                                      style={{
-                                        background: 'none',
-                                        border: 'none',
-                                        color: color.text,
-                                        opacity: 0.6,
-                                        cursor: 'pointer',
-                                        padding: 0,
-                                        fontSize: '11px',
-                                        lineHeight: 1,
-                                        fontFamily: '"IBM Plex Mono", monospace',
-                                      }}
-                                    >
-                                      ×
-                                    </button>
-                                  </motion.span>
-                                );
-                              })}
+                                    ×
+                                  </button>
+                                </motion.span>
+                              ))}
                             </AnimatePresence>
                           </div>
                         )}
@@ -993,7 +976,6 @@ export default function App() {
 
                 <div>
                   {Object.entries(personTotals).map(([person, breakdown]) => {
-                    const color = getPersonColor(person, people);
                     const isExpanded = expandedPerson === person;
 
                     return (
@@ -1019,7 +1001,7 @@ export default function App() {
                             style={{
                               width: '24px',
                               fontSize: '15px',
-                              color: color.bg,
+                              color: inkMid,
                               flexShrink: 0,
                               lineHeight: 1,
                             }}
@@ -1055,7 +1037,7 @@ export default function App() {
                                 letterSpacing: '0.15em',
                                 textTransform: 'uppercase',
                                 fontWeight: 700,
-                                color: color.bg,
+                                color: amber,
                               }}>
                                 VIEW & SHARE ↗
                               </span>
@@ -1132,8 +1114,8 @@ export default function App() {
                                       textTransform: 'uppercase',
                                       fontWeight: 700,
                                       fontFamily: '"IBM Plex Mono", monospace',
-                                      background: color.bg,
-                                      color: color.text,
+                                      background: '#1C1710',
+                                      color: '#F7F2E8',
                                       border: 'none',
                                       cursor: 'pointer',
                                     }}
