@@ -87,10 +87,10 @@ const PerforatedEdge = ({ flip = false }: { flip?: boolean }) => (
     <svg width="100%" height="14" preserveAspectRatio="none">
       <defs>
         <pattern id={flip ? 'perf-flip' : 'perf'} x="0" y="0" width="20" height="14" patternUnits="userSpaceOnUse">
-          <circle cx="10" cy={flip ? 14 : 0} r="7" fill="#DDD6C8" />
+          <circle cx="10" cy={flip ? 14 : 0} r="7" fill="#E2E2E2" />
         </pattern>
       </defs>
-      <rect width="100%" height="14" fill="#F7F2E8" />
+      <rect width="100%" height="14" fill="#FAFAFA" />
       <rect width="100%" height="14" fill={`url(#${flip ? 'perf-flip' : 'perf'})`} />
     </svg>
   </div>
@@ -109,13 +109,13 @@ interface SharedReceiptData {
 }
 
 const SharedReceiptView = ({ data }: { data: SharedReceiptData }) => {
-  const rule = '#D5C8B5';
-  const inkMid = '#4E4035';
-  const inkLight = '#6E5F50';
+  const rule = '#DCDCDC';
+  const inkMid = '#484848';
+  const inkLight = '#8C8C8C';
 
   return (
-    <div style={{ background: '#DDD6C8', minHeight: '100vh', fontFamily: '"IBM Plex Mono", monospace' }}>
-      <div style={{ background: '#F7F2E8', color: '#1C1710', maxWidth: '420px', margin: '0 auto', minHeight: '100vh', boxShadow: '0 0 60px rgba(28,23,16,0.15)', display: 'flex', flexDirection: 'column' }}>
+    <div style={{ background: '#E2E2E2', minHeight: '100vh', fontFamily: '"IBM Plex Mono", monospace' }}>
+      <div style={{ background: '#FAFAFA', color: '#0A0A0A', maxWidth: '420px', margin: '0 auto', minHeight: '100vh', boxShadow: '0 0 60px rgba(0,0,0,0.12)', display: 'flex', flexDirection: 'column' }}>
         <PerforatedEdge />
         <div style={{ padding: '28px 24px 20px', textAlign: 'center', borderBottom: `1px dashed ${rule}` }}>
           <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '16px' }}>
@@ -126,7 +126,7 @@ const SharedReceiptView = ({ data }: { data: SharedReceiptData }) => {
           </div>
           <div style={{ borderTop: `1px solid ${rule}`, borderBottom: `1px solid ${rule}`, padding: '8px 0', marginBottom: '14px' }}>
             <div style={{ fontSize: '10px', letterSpacing: '0.2em', color: inkLight, marginBottom: '4px' }}>YOUR SHARE OF</div>
-            <h1 style={{ fontSize: '20px', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', color: '#1C1710', margin: 0 }}>
+            <h1 style={{ fontSize: '20px', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', color: '#0A0A0A', margin: 0 }}>
               {data.restaurant || 'THE BILL'}
             </h1>
           </div>
@@ -151,7 +151,7 @@ const SharedReceiptView = ({ data }: { data: SharedReceiptData }) => {
               </span>
             </div>
           ))}
-          <div style={{ marginTop: '16px', paddingTop: '12px', borderTop: `2px solid #1C1710`, fontSize: '11px', color: inkMid }}>
+          <div style={{ marginTop: '16px', paddingTop: '12px', borderTop: `2px solid #0A0A0A`, fontSize: '11px', color: inkMid }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', padding: '3px 0' }}>
               <span>SUBTOTAL {data.itemsIncludeTax && <span style={{ color: inkLight, fontSize: '9px' }}>(TAX INCL.)</span>}</span>
               <span style={{ fontVariantNumeric: 'tabular-nums' }}>{formatCurrency(data.currency)} {data.subtotal.toFixed(2)}</span>
@@ -168,7 +168,7 @@ const SharedReceiptView = ({ data }: { data: SharedReceiptData }) => {
                 <span style={{ fontVariantNumeric: 'tabular-nums' }}>{formatCurrency(data.currency)} {data.tip.toFixed(2)}</span>
               </div>
             )}
-            <div style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 0 4px', marginTop: '8px', borderTop: `2px solid #1C1710`, fontSize: '20px', fontWeight: 700, color: '#1C1710' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 0 4px', marginTop: '8px', borderTop: `2px solid #0A0A0A`, fontSize: '20px', fontWeight: 700, color: '#0A0A0A' }}>
               <span>TOTAL</span>
               <span style={{ fontVariantNumeric: 'tabular-nums' }}>{formatCurrency(data.currency)} {data.total.toFixed(2)}</span>
             </div>
@@ -182,14 +182,14 @@ const SharedReceiptView = ({ data }: { data: SharedReceiptData }) => {
 
         {/* ── Viral CTA ─────────────────────────────────────────────────── */}
         <div style={{
-          background: '#1C1710',
+          background: '#0A0A0A',
           padding: '28px 24px 32px',
           textAlign: 'center',
         }}>
           <div style={{
             fontSize: '18px',
             fontWeight: 700,
-            color: '#F7F2E8',
+            color: '#FAFAFA',
             letterSpacing: '0.02em',
             marginBottom: '10px',
             lineHeight: 1.3,
@@ -198,7 +198,7 @@ const SharedReceiptView = ({ data }: { data: SharedReceiptData }) => {
           </div>
           <div style={{
             fontSize: '11px',
-            color: '#C4B59F',
+            color: '#888888',
             letterSpacing: '0.05em',
             lineHeight: 1.7,
             marginBottom: '22px',
@@ -217,8 +217,8 @@ const SharedReceiptView = ({ data }: { data: SharedReceiptData }) => {
               textTransform: 'uppercase',
               fontWeight: 700,
               fontFamily: '"IBM Plex Mono", monospace',
-              background: '#8A6008',
-              color: '#F7F2E8',
+              background: '#0A0A0A',
+              color: '#FAFAFA',
               textDecoration: 'none',
               transition: 'opacity 0.15s',
             }}
@@ -229,7 +229,7 @@ const SharedReceiptView = ({ data }: { data: SharedReceiptData }) => {
             marginTop: '16px',
             fontSize: '8px',
             letterSpacing: '0.25em',
-            color: '#4E4035',
+            color: '#484848',
             textTransform: 'uppercase',
           }}>
             JAMES · FREE · NO SIGN-UP
@@ -448,18 +448,18 @@ export default function App() {
 
   // ─── Styles ────────────────────────────────────────────────────────────────
   const paper: React.CSSProperties = {
-    background: '#F7F2E8',
+    background: '#FAFAFA',
     fontFamily: '"IBM Plex Mono", monospace',
-    color: '#1C1710',
+    color: '#0A0A0A',
   };
 
-  const rule = '#D5C8B5';
-  const inkMid = '#4E4035';
-  const inkLight = '#6E5F50';
-  const amber = '#8A6008';
+  const rule = '#DCDCDC';
+  const inkMid = '#484848';
+  const inkLight = '#8C8C8C';
+  const amber = '#0A0A0A';
 
   return (
-    <div style={{ background: '#DDD6C8', minHeight: '100vh', fontFamily: '"IBM Plex Mono", monospace' }}>
+    <div style={{ background: '#E2E2E2', minHeight: '100vh', fontFamily: '"IBM Plex Mono", monospace' }}>
       {/* ── Loading overlay ───────────────────────────────────────────────── */}
       <AnimatePresence>
         {isUploading && (
@@ -475,7 +475,7 @@ export default function App() {
               flexDirection: 'column',
               alignItems: 'center',
               justifyContent: 'center',
-              background: 'rgba(247, 242, 232, 0.96)',
+              background: 'rgba(250,250,250,0.96)',
               backdropFilter: 'blur(4px)',
             }}
           >
@@ -493,7 +493,7 @@ export default function App() {
                   letterSpacing: '0.3em',
                   textTransform: 'uppercase',
                   fontWeight: 700,
-                  color: '#1C1710',
+                  color: '#0A0A0A',
                   marginBottom: '8px',
                 }}
               >
@@ -533,7 +533,7 @@ export default function App() {
           maxWidth: '420px',
           margin: '0 auto',
           minHeight: '100vh',
-          boxShadow: '0 0 60px rgba(28,23,16,0.15)',
+          boxShadow: '0 0 60px rgba(0,0,0,0.12)',
           display: 'flex',
           flexDirection: 'column',
         }}
@@ -578,7 +578,7 @@ export default function App() {
                   fontWeight: 700,
                   letterSpacing: '0.05em',
                   textTransform: 'uppercase',
-                  color: '#1C1710',
+                  color: '#0A0A0A',
                   margin: 0,
                 }}
               >
@@ -621,7 +621,7 @@ export default function App() {
           {receipt && <div style={{
             margin: '0 -24px',
             padding: '20px 24px',
-            background: '#EDE6D5',
+            background: '#F0F0F0',
             borderBottom: `1px solid ${rule}`,
           }}>
             <div
@@ -629,7 +629,7 @@ export default function App() {
                 fontSize: '9px',
                 letterSpacing: '0.3em',
                 textTransform: 'uppercase',
-                color: '#1C1710',
+                color: '#0A0A0A',
                 fontWeight: 700,
                 marginBottom: '14px',
               }}
@@ -651,10 +651,10 @@ export default function App() {
                   padding: '9px 10px',
                   fontSize: '12px',
                   letterSpacing: '0.05em',
-                  background: '#F7F2E8',
+                  background: '#FAFAFA',
                   border: `1px solid ${rule}`,
                   borderRadius: '2px',
-                  color: '#1C1710',
+                  color: '#0A0A0A',
                   fontFamily: '"IBM Plex Mono", monospace',
                   outline: 'none',
                 }}
@@ -669,8 +669,8 @@ export default function App() {
                   fontWeight: 700,
                   fontFamily: '"IBM Plex Mono", monospace',
                   border: 'none',
-                  background: newPersonName.trim() && people.length < 50 ? '#1C1710' : rule,
-                  color: newPersonName.trim() && people.length < 50 ? '#F7F2E8' : inkLight,
+                  background: newPersonName.trim() && people.length < 50 ? '#0A0A0A' : rule,
+                  color: newPersonName.trim() && people.length < 50 ? '#FAFAFA' : inkLight,
                   cursor: newPersonName.trim() && people.length < 50 ? 'pointer' : 'default',
                   transition: 'all 0.15s',
                   borderRadius: '2px',
@@ -696,9 +696,9 @@ export default function App() {
                         textTransform: 'uppercase',
                         fontWeight: 700,
                         fontFamily: '"IBM Plex Mono", monospace',
-                        background: isSelected ? '#1C1710' : 'transparent',
-                        color: isSelected ? '#F7F2E8' : '#1C1710',
-                        border: `1.5px solid #1C1710`,
+                        background: isSelected ? '#0A0A0A' : 'transparent',
+                        color: isSelected ? '#FAFAFA' : '#0A0A0A',
+                        border: `1.5px solid #0A0A0A`,
                         cursor: 'pointer',
                         outline: 'none',
                         transition: 'all 0.15s',
@@ -758,8 +758,8 @@ export default function App() {
             <div style={{ padding: '60px 0', textAlign: 'center' }}>
               <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '28px' }}>
                 <svg width="52" height="68" viewBox="0 0 40 54" fill="none">
-                  <rect x="0" y="0" width="40" height="46" fill="#EDE6D5" rx="1"/>
-                  <path d="M0 46 L5 53 L10 46 L15 53 L20 46 L25 53 L30 46 L35 53 L40 46 Z" fill="#EDE6D5"/>
+                  <rect x="0" y="0" width="40" height="46" fill="#F0F0F0" rx="1"/>
+                  <path d="M0 46 L5 53 L10 46 L15 53 L20 46 L25 53 L30 46 L35 53 L40 46 Z" fill="#F0F0F0"/>
                   <rect x="7" y="9"  width="26" height="2" fill={inkLight} rx="1"/>
                   <rect x="7" y="16" width="18" height="2" fill={inkLight} rx="1"/>
                   <rect x="7" y="23" width="22" height="2" fill={inkLight} rx="1"/>
@@ -777,9 +777,9 @@ export default function App() {
                   textTransform: 'uppercase',
                   fontWeight: 700,
                   fontFamily: '"IBM Plex Mono", monospace',
-                  border: `1px solid #1C1710`,
-                  background: '#1C1710',
-                  color: '#F7F2E8',
+                  border: `1px solid #0A0A0A`,
+                  background: '#0A0A0A',
+                  color: '#FAFAFA',
                   cursor: 'pointer',
                 }}
               >
@@ -841,7 +841,7 @@ export default function App() {
                           padding: '10px 0',
                           borderBottom: `1px dotted ${rule}`,
                           background: isAssignedToSelected
-                            ? 'rgba(184, 132, 15, 0.05)'
+                            ? 'rgba(0,0,0,0.03)'
                             : 'transparent',
                           userSelect: 'none',
                         }}
@@ -856,7 +856,7 @@ export default function App() {
                               color: isAssignedToSelected
                                 ? amber
                                 : isAssigned
-                                ? '#2C5E45'
+                                ? '#484848'
                                 : inkLight,
                             }}
                           >
@@ -871,7 +871,7 @@ export default function App() {
                               textOverflow: 'ellipsis',
                               whiteSpace: 'nowrap',
                               paddingRight: '8px',
-                              color: isAssigned && !isAssignedToSelected ? '#B0A898' : '#1C1710',
+                              color: isAssigned && !isAssignedToSelected ? '#AEAEAE' : '#0A0A0A',
                             }}
                           >
                             {item.name.toUpperCase()}
@@ -882,7 +882,7 @@ export default function App() {
                               fontWeight: 600,
                               flexShrink: 0,
                               fontVariantNumeric: 'tabular-nums',
-                              color: isAssignedToSelected ? amber : isAssigned ? '#B0A898' : '#1C1710',
+                              color: isAssignedToSelected ? amber : isAssigned ? '#AEAEAE' : '#0A0A0A',
                             }}
                           >
                             {formatCurrency(receipt.currency)} {item.price.toFixed(2)}
@@ -958,7 +958,7 @@ export default function App() {
               </div>
 
               {/* ── Summary ───────────────────────────────────────────── */}
-              <div style={{ padding: '20px 0', borderTop: '2px solid #1C1710' }}>
+              <div style={{ padding: '20px 0', borderTop: '2px solid #0A0A0A' }}>
                 <div
                   style={{
                     fontSize: '9px',
@@ -1012,7 +1012,7 @@ export default function App() {
                               fontWeight: 700,
                               letterSpacing: '0.08em',
                               textTransform: 'uppercase',
-                              color: '#1C1710',
+                              color: '#0A0A0A',
                             }}
                           >
                             {person}
@@ -1023,7 +1023,7 @@ export default function App() {
                                 fontSize: '14px',
                                 fontWeight: 700,
                                 fontVariantNumeric: 'tabular-nums',
-                                color: '#1C1710',
+                                color: '#0A0A0A',
                               }}
                             >
                               {formatCurrency(receipt.currency)} {breakdown.total.toFixed(2)}
@@ -1051,11 +1051,11 @@ export default function App() {
                               style={{ overflow: 'hidden' }}
                             >
                               {/* Mini receipt card */}
-                              <div style={{ margin: '0 0 12px 0', border: `1px dashed ${rule}`, background: '#EDE6D5' }}>
+                              <div style={{ margin: '0 0 12px 0', border: `1px dashed ${rule}`, background: '#F0F0F0' }}>
                                 {/* Mini receipt header */}
                                 <div style={{ padding: '8px 12px', borderBottom: `1px dashed ${rule}`, textAlign: 'center' }}>
                                   <div style={{ fontSize: '9px', letterSpacing: '0.2em', color: inkLight }}>YOUR SHARE</div>
-                                  <div style={{ fontSize: '13px', fontWeight: 700, letterSpacing: '0.08em', color: '#1C1710' }}>
+                                  <div style={{ fontSize: '13px', fontWeight: 700, letterSpacing: '0.08em', color: '#0A0A0A' }}>
                                     {person.toUpperCase()}
                                   </div>
                                 </div>
@@ -1093,7 +1093,7 @@ export default function App() {
                                     <span>TIP</span>
                                     <span style={{ fontVariantNumeric: 'tabular-nums' }}>{formatCurrency(receipt.currency)} {breakdown.tip.toFixed(2)}</span>
                                   </div>
-                                  <div style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 0 2px', marginTop: '4px', borderTop: `1px solid #1C1710`, fontWeight: 700, fontSize: '12px', color: '#1C1710' }}>
+                                  <div style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 0 2px', marginTop: '4px', borderTop: `1px solid #0A0A0A`, fontWeight: 700, fontSize: '12px', color: '#0A0A0A' }}>
                                     <span>TOTAL</span>
                                     <span style={{ fontVariantNumeric: 'tabular-nums' }}>{formatCurrency(receipt.currency)} {breakdown.total.toFixed(2)}</span>
                                   </div>
@@ -1111,8 +1111,8 @@ export default function App() {
                                       textTransform: 'uppercase',
                                       fontWeight: 700,
                                       fontFamily: '"IBM Plex Mono", monospace',
-                                      background: '#1C1710',
-                                      color: '#F7F2E8',
+                                      background: '#0A0A0A',
+                                      color: '#FAFAFA',
                                       border: 'none',
                                       cursor: 'pointer',
                                     }}
@@ -1198,7 +1198,7 @@ export default function App() {
                       fontFamily: '"IBM Plex Mono", monospace',
                       border: `1px solid ${amber}`,
                       background: isTipPanelOpen ? amber : 'transparent',
-                      color: isTipPanelOpen ? '#F7F2E8' : amber,
+                      color: isTipPanelOpen ? '#FAFAFA' : amber,
                       cursor: 'pointer',
                       transition: 'all 0.15s',
                     }}
@@ -1233,9 +1233,9 @@ export default function App() {
                                   textTransform: 'uppercase',
                                   fontWeight: 700,
                                   fontFamily: '"IBM Plex Mono", monospace',
-                                  border: `1px solid #1C1710`,
-                                  background: tipMode === mode ? '#1C1710' : 'transparent',
-                                  color: tipMode === mode ? '#F7F2E8' : '#1C1710',
+                                  border: `1px solid #0A0A0A`,
+                                  background: tipMode === mode ? '#0A0A0A' : 'transparent',
+                                  color: tipMode === mode ? '#FAFAFA' : '#0A0A0A',
                                   cursor: 'pointer',
                                   transition: 'all 0.15s',
                                 }}
@@ -1258,9 +1258,9 @@ export default function App() {
                                       fontSize: '10px',
                                       fontWeight: 700,
                                       fontFamily: '"IBM Plex Mono", monospace',
-                                      border: `1px solid #1C1710`,
-                                      background: tipRate === rate ? '#1C1710' : 'transparent',
-                                      color: tipRate === rate ? '#F7F2E8' : '#1C1710',
+                                      border: `1px solid #0A0A0A`,
+                                      background: tipRate === rate ? '#0A0A0A' : 'transparent',
+                                      color: tipRate === rate ? '#FAFAFA' : '#0A0A0A',
                                       cursor: 'pointer',
                                       transition: 'all 0.15s',
                                     }}
@@ -1276,7 +1276,7 @@ export default function App() {
                                 step="1"
                                 value={tipRate}
                                 onChange={(e) => setTipRate(parseFloat(e.target.value))}
-                                style={{ width: '100%', accentColor: '#1C1710', cursor: 'pointer' }}
+                                style={{ width: '100%', accentColor: '#0A0A0A', cursor: 'pointer' }}
                               />
                               <div
                                 style={{
@@ -1313,7 +1313,7 @@ export default function App() {
                                   background: 'transparent',
                                   border: 'none',
                                   outline: 'none',
-                                  color: '#1C1710',
+                                  color: '#0A0A0A',
                                   fontFamily: '"IBM Plex Mono", monospace',
                                 }}
                               />
@@ -1326,7 +1326,7 @@ export default function App() {
                 </div>
 
                 {/* ── Grand total ──────────────────────────────────────── */}
-                <div style={{ marginTop: '24px', paddingTop: '16px', borderTop: `2px solid #1C1710` }}>
+                <div style={{ marginTop: '24px', paddingTop: '16px', borderTop: `2px solid #0A0A0A` }}>
                   <div style={{ fontSize: '11px', color: inkMid }}>
                     <div
                       style={{
@@ -1381,10 +1381,10 @@ export default function App() {
                       justifyContent: 'space-between',
                       padding: '10px 0 4px',
                       marginTop: '8px',
-                      borderTop: `2px solid #1C1710`,
+                      borderTop: `2px solid #0A0A0A`,
                       fontSize: '16px',
                       fontWeight: 700,
-                      color: '#1C1710',
+                      color: '#0A0A0A',
                       letterSpacing: '0.05em',
                     }}
                   >
