@@ -177,7 +177,7 @@ const SharedReceiptView = ({ data }: { data: SharedReceiptData }) => {
             )}
             {data.tip > 0 && (
               <div style={{ display: 'flex', justifyContent: 'space-between', padding: '3px 0' }}>
-                <span>TIP</span>
+                <span>TIP {data.subtotal > 0 ? `(${Math.round((data.tip / data.subtotal) * 100)}%)` : ''}</span>
                 <span style={{ fontVariantNumeric: 'tabular-nums' }}>{formatCurrency(data.currency)} {data.tip.toFixed(2)}</span>
               </div>
             )}
