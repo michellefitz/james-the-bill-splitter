@@ -192,7 +192,62 @@ const SharedReceiptView = ({ data }: { data: SharedReceiptData }) => {
             ★ THANK YOU ★ PLEASE COME AGAIN ★<br />POWERED BY JAMES v1.0
           </div>
         </div>
-        <PerforatedEdge flip />
+
+        {/* ── Viral CTA ─────────────────────────────────────────────────── */}
+        <div style={{
+          background: '#1C1710',
+          padding: '28px 24px 32px',
+          textAlign: 'center',
+        }}>
+          <div style={{
+            fontSize: '18px',
+            fontWeight: 700,
+            color: '#F7F2E8',
+            letterSpacing: '0.02em',
+            marginBottom: '10px',
+            lineHeight: 1.3,
+          }}>
+            Not bad, right?
+          </div>
+          <div style={{
+            fontSize: '11px',
+            color: '#C4B59F',
+            letterSpacing: '0.05em',
+            lineHeight: 1.7,
+            marginBottom: '22px',
+            maxWidth: '260px',
+            margin: '0 auto 22px',
+          }}>
+            Whoever split this bill did it in seconds.<br />Next time, that could be you.
+          </div>
+          <a
+            href={window.location.origin}
+            style={{
+              display: 'inline-block',
+              padding: '11px 26px',
+              fontSize: '10px',
+              letterSpacing: '0.2em',
+              textTransform: 'uppercase',
+              fontWeight: 700,
+              fontFamily: '"IBM Plex Mono", monospace',
+              background: '#8A6008',
+              color: '#F7F2E8',
+              textDecoration: 'none',
+              transition: 'opacity 0.15s',
+            }}
+          >
+            SPLIT YOUR NEXT BILL →
+          </a>
+          <div style={{
+            marginTop: '16px',
+            fontSize: '8px',
+            letterSpacing: '0.25em',
+            color: '#4E4035',
+            textTransform: 'uppercase',
+          }}>
+            JAMES · FREE · NO SIGN-UP
+          </div>
+        </div>
       </div>
     </div>
   );
