@@ -949,7 +949,7 @@ export default function App() {
                             width: '100%',
                             display: 'flex',
                             alignItems: 'center',
-                            padding: '10px 0',
+                            padding: '12px 0',
                             background: 'none',
                             border: 'none',
                             cursor: 'pointer',
@@ -959,10 +959,11 @@ export default function App() {
                         >
                           <span
                             style={{
-                              width: '18px',
-                              fontSize: '10px',
+                              width: '24px',
+                              fontSize: '15px',
                               color: color.bg,
                               flexShrink: 0,
+                              lineHeight: 1,
                             }}
                           >
                             {isExpanded ? '▾' : '▸'}
@@ -979,16 +980,29 @@ export default function App() {
                           >
                             {person}
                           </span>
-                          <span
-                            style={{
-                              fontSize: '14px',
-                              fontWeight: 700,
-                              fontVariantNumeric: 'tabular-nums',
-                              color: '#1C1710',
-                            }}
-                          >
-                            {formatCurrency(receipt.currency)} {breakdown.total.toFixed(2)}
-                          </span>
+                          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '3px' }}>
+                            <span
+                              style={{
+                                fontSize: '14px',
+                                fontWeight: 700,
+                                fontVariantNumeric: 'tabular-nums',
+                                color: '#1C1710',
+                              }}
+                            >
+                              {formatCurrency(receipt.currency)} {breakdown.total.toFixed(2)}
+                            </span>
+                            {!isExpanded && (
+                              <span style={{
+                                fontSize: '8px',
+                                letterSpacing: '0.15em',
+                                textTransform: 'uppercase',
+                                fontWeight: 700,
+                                color: color.bg,
+                              }}>
+                                VIEW & SHARE ↗
+                              </span>
+                            )}
+                          </div>
                         </button>
 
                         <AnimatePresence>
