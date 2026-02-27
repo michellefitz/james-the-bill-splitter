@@ -25,6 +25,9 @@ export async function parseReceiptImage(base64Image: string, mimeType: string): 
   });
 
   const data = JSON.parse(response.text || "{}");
+  data.tip = data.tip ?? 0;
+  data.tax = data.tax ?? 0;
+  data.currency = data.currency ?? '€';
   // Add IDs to items
   data.items = data.items.map((item: any, index: number) => ({
     ...item,
