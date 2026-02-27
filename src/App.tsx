@@ -601,10 +601,11 @@ export default function App() {
                   textTransform: 'uppercase',
                   background: 'transparent',
                   border: 'none',
-                  borderBottom: `1px solid ${rule}`,
+                  borderBottom: `1px solid ${receipt && people.length === 0 ? amber : rule}`,
                   color: '#1C1710',
                   fontFamily: '"IBM Plex Mono", monospace',
                   outline: 'none',
+                  transition: 'border-color 0.3s',
                 }}
               />
               <button
@@ -661,28 +662,56 @@ export default function App() {
                   );
                 })}
               </div>
+            ) : receipt ? (
+              <motion.p
+                animate={{ opacity: [0.6, 1, 0.6] }}
+                transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
+                style={{ fontSize: '10px', color: amber, letterSpacing: '0.1em', fontWeight: 700 }}
+              >
+                TYPE A NAME + PRESS + ADD TO BEGIN
+              </motion.p>
             ) : (
               <p style={{ fontSize: '10px', color: inkLight, letterSpacing: '0.1em' }}>
                 ADD NAMES TO BEGIN
               </p>
             )}
 
-            {selectedPerson && (
-              <motion.p
-                initial={{ opacity: 0, y: -4 }}
-                animate={{ opacity: 1, y: 0 }}
-                style={{
-                  marginTop: '12px',
-                  fontSize: '9px',
-                  letterSpacing: '0.2em',
-                  textTransform: 'uppercase',
-                  fontWeight: 700,
-                  color: getPersonColor(selectedPerson, people).bg,
-                }}
-              >
-                ▸ TAP ITEMS TO ASSIGN {selectedPerson.toUpperCase()}
-              </motion.p>
-            )}
+            <AnimatePresence mode="wait">
+              {selectedPerson ? (
+                <motion.p
+                  key="selected"
+                  initial={{ opacity: 0, y: -4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -4 }}
+                  style={{
+                    marginTop: '12px',
+                    fontSize: '9px',
+                    letterSpacing: '0.2em',
+                    textTransform: 'uppercase',
+                    fontWeight: 700,
+                    color: getPersonColor(selectedPerson, people).bg,
+                  }}
+                >
+                  ▸ TAP ITEMS BELOW TO ASSIGN {selectedPerson.toUpperCase()}
+                </motion.p>
+              ) : people.length > 0 ? (
+                <motion.p
+                  key="nudge"
+                  initial={{ opacity: 0, y: -4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -4 }}
+                  style={{
+                    marginTop: '12px',
+                    fontSize: '9px',
+                    letterSpacing: '0.2em',
+                    textTransform: 'uppercase',
+                    color: inkMid,
+                  }}
+                >
+                  ▸ SELECT A NAME ABOVE, THEN TAP ITEMS BELOW
+                </motion.p>
+              ) : null}
+            </AnimatePresence>
           </div>
 
           {/* ── No receipt state ────────────────────────────────────────── */}
@@ -705,6 +734,30 @@ export default function App() {
             <>
               {/* ── Items ─────────────────────────────────────────────── */}
               <div style={{ padding: '20px 0', borderBottom: `1px dashed ${rule}` }}>
+                {/* Flow callout: receipt loaded but no names added yet */}
+                <AnimatePresence>
+                  {people.length === 0 && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -6 }}
+                      style={{
+                        marginBottom: '16px',
+                        padding: '10px 12px',
+                        border: `1px dashed ${amber}`,
+                        background: 'rgba(184, 132, 15, 0.05)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '10px',
+                      }}
+                    >
+                      <span style={{ fontSize: '16px', color: amber, lineHeight: 1 }}>↑</span>
+                      <span style={{ fontSize: '9px', letterSpacing: '0.2em', textTransform: 'uppercase', color: amber, fontWeight: 700 }}>
+                        ADD NAMES ABOVE TO START SPLITTING
+                      </span>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
                 <div
                   style={{
                     display: 'flex',
