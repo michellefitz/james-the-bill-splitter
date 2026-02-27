@@ -22,23 +22,20 @@
       box-shadow: 0 0 80px rgba(28,23,16,0.18);
     }
 
-    /* Phone mockup */
-    .phone { background: #1C1710; border-radius: 22px; padding: 7px; margin: 0 auto; box-shadow: 0 12px 40px rgba(28,23,16,0.4); }
-    .phone-lg { width: 210px; }
-    .phone-sm { width: 148px; }
-    .screen { background: #F7F2E8; overflow: hidden; }
-    .phone-lg .screen { border-radius: 16px; padding: 8px; }
-    .phone-sm .screen { border-radius: 12px; padding: 6px; }
-
-    .chip {
-      display: inline-block;
-      padding: 1px 5px;
-      font-size: 5.5px;
-      font-weight: 700;
-      color: #F7F2E8;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      font-family: 'IBM Plex Mono', monospace;
+    .phone-frame {
+      background: #1C1710;
+      border-radius: 22px;
+      padding: 7px;
+      box-shadow: 0 12px 40px rgba(28,23,16,0.4);
+      display: block;
+    }
+    .phone-screen {
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .phone-screen img {
+      width: 100%;
+      display: block;
     }
 
     .sec { padding: 40px 28px; border-bottom: 1px dashed #D5C8B5; }
@@ -56,7 +53,7 @@
     .feature-title { font-size: 13px; font-weight: 700; margin-bottom: 5px; }
     .feature-body { font-size: 11px; color: #4E4035; line-height: 1.8; }
 
-    .step-num { font-size: 10px; letter-spacing: 0.1em; color: #6E5F50; flex-shrink: 0; padding-top: 3px; }
+    .step-num { font-size: 10px; letter-spacing: 0.1em; color: #6E5F50; flex-shrink: 0; padding-top: 3px; min-width: 48px; }
     .step-title { font-size: 14px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 7px; }
     .step-body { font-size: 11px; color: #4E4035; line-height: 1.8; }
 
@@ -91,7 +88,7 @@
     <rect width="100%" height="14" fill="url(#pt)"/>
   </svg>
 
-  <!-- ── HERO ──────────────────────────────────────────────────────────── -->
+  <!-- ── HERO ────────────────────────────────────────────────────────────── -->
   <div class="sec" style="text-align:center; padding-top:48px;">
     <img src="/favicon.jpeg" width="72" height="72"
       style="mix-blend-mode:multiply; image-rendering:pixelated; object-fit:contain; display:block; margin:0 auto 18px;"
@@ -100,7 +97,7 @@
     <h1 style="font-size:30px; font-weight:700; line-height:1.2; margin-bottom:16px;">
       James handles<br>the maths.<br>You enjoy dinner.
     </h1>
-    <p style="font-size:12px; color:#4E4035; line-height:1.85; margin-bottom:32px; max-width:360px; margin-left:auto; margin-right:auto;">
+    <p style="font-size:12px; color:#4E4035; line-height:1.85; margin-bottom:32px; max-width:340px; margin-left:auto; margin-right:auto;">
       Scan a receipt, add names, and James splits the bill in seconds — then sends everyone their exact share.
     </p>
     <a href="/" class="cta-btn">[ SPLIT YOUR FIRST BILL → ]</a>
@@ -109,236 +106,89 @@
     </div>
   </div>
 
-  <!-- ── HERO PHONE MOCKUP ─────────────────────────────────────────────── -->
-  <div style="padding:40px 28px; background:#EDE6D5; border-bottom:1px dashed #D5C8B5; text-align:center;">
-    <div class="phone phone-lg">
-      <div class="screen">
-        <!-- Tiny perf edge inside phone -->
-        <svg width="100%" height="8" style="display:block; margin-bottom:5px;">
-          <defs>
-            <pattern id="pi" x="0" y="0" width="12" height="8" patternUnits="userSpaceOnUse">
-              <circle cx="6" cy="0" r="4" fill="#EDE6D5"/>
-            </pattern>
-          </defs>
-          <rect width="100%" height="8" fill="#F7F2E8"/>
-          <rect width="100%" height="8" fill="url(#pi)"/>
-        </svg>
-
-        <!-- Phone header -->
-        <div style="text-align:center; padding-bottom:6px; border-bottom:1px dashed #D5C8B5; margin-bottom:6px;">
-          <img src="/favicon.jpeg" width="22" height="22" style="mix-blend-mode:multiply; image-rendering:pixelated; display:block; margin:0 auto 3px;" />
-          <div style="font-size:4.5px; letter-spacing:0.25em; color:#4E4035; text-transform:uppercase;">★ JAMES ★</div>
-          <div style="font-size:8px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; padding:3px 0; margin-top:4px; border-top:1px solid #D5C8B5; border-bottom:1px solid #D5C8B5;">LA BRASSERIE</div>
-        </div>
-
-        <!-- WHO'S SPLITTING -->
-        <div style="background:#EDE6D5; padding:5px 4px; margin:0 -8px 6px; border-bottom:1px solid #D5C8B5;">
-          <div style="font-size:4.5px; letter-spacing:0.2em; font-weight:700; color:#1C1710; margin-bottom:4px; text-transform:uppercase;">── WHO'S SPLITTING? ──────</div>
-          <div style="display:flex; gap:3px; flex-wrap:wrap;">
-            <span class="chip" style="background:#C4826A;">SARAH ✓</span>
-            <span class="chip" style="background:#6A8FAA;">PETE</span>
-            <span class="chip" style="background:#7A9A7A;">ANNA</span>
-          </div>
-          <div style="font-size:4px; color:#4E4035; letter-spacing:0.1em; margin-top:4px;">▸ TAP ITEMS TO ASSIGN SARAH</div>
-        </div>
-
-        <!-- Items -->
-        <div style="font-size:4.5px; letter-spacing:0.15em; color:#4E4035; font-weight:700; margin-bottom:5px; text-transform:uppercase;">── ITEMS ──────────────</div>
-
-        <div style="border-bottom:1px dotted #D5C8B5; padding:3px 0;">
-          <div style="display:flex; align-items:center; font-size:6.5px;">
-            <span style="flex:1; text-transform:uppercase; letter-spacing:0.04em; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; padding-right:4px;">Smoked Salmon</span>
-            <span style="font-weight:600; flex-shrink:0; color:#B0A898;">€18.00</span>
-          </div>
-          <div style="margin-top:2px;"><span class="chip" style="background:#C4826A;">SARAH</span></div>
-        </div>
-
-        <div style="border-bottom:1px dotted #D5C8B5; padding:3px 0;">
-          <div style="display:flex; align-items:center; font-size:6.5px;">
-            <span style="flex:1; text-transform:uppercase; letter-spacing:0.04em; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; padding-right:4px;">Steak Frites</span>
-            <span style="font-weight:600; flex-shrink:0; color:#B0A898;">€24.00</span>
-          </div>
-          <div style="margin-top:2px;"><span class="chip" style="background:#6A8FAA;">PETE</span></div>
-        </div>
-
-        <div style="border-bottom:1px dotted #D5C8B5; padding:3px 0;">
-          <div style="display:flex; align-items:center; font-size:6.5px;">
-            <span style="flex:1; text-transform:uppercase; letter-spacing:0.04em; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; padding-right:4px;">Crème Brûlée</span>
-            <span style="font-weight:600; flex-shrink:0; color:#B0A898;">€9.00</span>
-          </div>
-          <div style="margin-top:2px;">
-            <span class="chip" style="background:#C4826A;">SARAH</span>
-            <span class="chip" style="background:#7A9A7A; margin-left:2px;">ANNA</span>
-          </div>
-        </div>
-
-        <div style="border-bottom:1px dotted #D5C8B5; padding:3px 0;">
-          <div style="display:flex; align-items:center; font-size:6.5px;">
-            <span style="flex:1; text-transform:uppercase; letter-spacing:0.04em; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; padding-right:4px;">Bottle of Wine</span>
-            <span style="font-weight:600; flex-shrink:0; color:#B0A898;">€32.00</span>
-          </div>
-          <div style="margin-top:2px;">
-            <span class="chip" style="background:#C4826A;">SARAH</span>
-            <span class="chip" style="background:#6A8FAA; margin-left:2px;">PETE</span>
-            <span class="chip" style="background:#7A9A7A; margin-left:2px;">ANNA</span>
-          </div>
-        </div>
-
-        <!-- Total -->
-        <div style="border-top:1.5px solid #1C1710; margin-top:6px; padding-top:5px; display:flex; justify-content:space-between; font-size:7.5px; font-weight:700;">
-          <span>TOTAL</span>
-          <span>€83.00</span>
-        </div>
+  <!-- ── HERO SCREENSHOT ────────────────────────────────────────────────── -->
+  <div style="padding:40px 28px; background:#EDE6D5; border-bottom:1px dashed #D5C8B5; display:flex; justify-content:center;">
+    <div class="phone-frame" style="width:230px;">
+      <div class="phone-screen">
+        <img src="/bill-split.png" alt="James app showing bill being split between Peter, Eoin, Oliver and Michelle">
       </div>
     </div>
   </div>
 
-  <!-- ── STORY ─────────────────────────────────────────────────────────── -->
+  <!-- ── STORY ──────────────────────────────────────────────────────────── -->
   <div class="sec">
     <div class="eyebrow">★ THE STORY ★</div>
     <h2 style="font-size:22px; font-weight:700; line-height:1.25; margin-bottom:20px;">
       Every friend group<br>has one.
     </h2>
     <p style="font-size:12px; color:#4E4035; line-height:1.85; margin-bottom:16px;">
-      The one who quietly works out the bill while everyone else argues about whether to split dessert. Dividing starters by four. Figuring out who had the extra glass. Calculating the service charge. Doing all of this while pretending to look at their phone.
+      The person who quietly works out the bill while everyone else orders dessert. Dividing starters, tracking who had the extra glass, calculating the service charge.
     </p>
-    <p style="font-size:12px; color:#4E4035; line-height:1.85; margin-bottom:16px;">
-      Our friend James was that person for years. Patient. Meticulous. Quietly suffering.
-    </p>
-    <p style="font-size:13px; color:#1C1710; font-weight:600; line-height:1.8; margin-bottom:16px; font-style:italic;">
-      So we built him a way out.
-    </p>
-    <p style="font-size:12px; color:#4E4035; line-height:1.85;">
-      James the person has officially retired from bill-splitting duties. James the app has taken over. He's faster, more accurate, and doesn't need a tip.
+    <p style="font-size:13px; color:#1C1710; font-weight:600; line-height:1.8; font-style:italic;">
+      We built James to give them a night off.
     </p>
   </div>
 
   <!-- ── HOW IT WORKS ───────────────────────────────────────────────────── -->
-  <div class="sec">
+  <div class="sec" style="padding-bottom:52px;">
     <div class="eyebrow">★ HOW IT WORKS ★</div>
 
-    <!-- STEP 01 -->
+    <!-- STEP 01: SCAN -->
     <div style="margin-bottom:36px;">
-      <div style="display:flex; align-items:flex-start; gap:16px; margin-bottom:22px;">
+      <div style="display:flex; align-items:flex-start; gap:16px; margin-bottom:24px;">
         <div class="step-num">01 ──</div>
         <div>
-          <div class="step-title">Scan the receipt</div>
-          <p class="step-body">Take a photo of your receipt. James reads every line item, the tax, and the total. Even the scruffy ones.</p>
+          <div class="step-title">Scan</div>
+          <p class="step-body">Take a photo of the receipt. James reads every line item, the tax, and the total. Even the scruffy ones.</p>
         </div>
       </div>
-      <div class="phone phone-sm">
-        <div class="screen" style="padding:8px; text-align:center;">
-          <img src="/favicon.jpeg" width="20" height="20" style="mix-blend-mode:multiply; image-rendering:pixelated; display:block; margin:0 auto 4px;" />
-          <div style="font-size:4.5px; letter-spacing:0.2em; color:#4E4035; margin-bottom:10px; text-transform:uppercase;">★ JAMES ★ THE BILL SPLITTER ★</div>
-          <svg width="34" height="46" viewBox="0 0 34 46" style="display:block; margin:0 auto 14px;">
-            <rect x="0" y="0" width="34" height="38" fill="#EDE6D5" rx="1"/>
-            <path d="M0 38 L4.25 45 L8.5 38 L12.75 45 L17 38 L21.25 45 L25.5 38 L29.75 45 L34 38 Z" fill="#EDE6D5"/>
-            <rect x="5" y="8" width="24" height="1.5" fill="#6E5F50" rx="1"/>
-            <rect x="5" y="13" width="16" height="1.5" fill="#6E5F50" rx="1"/>
-            <rect x="5" y="18" width="20" height="1.5" fill="#6E5F50" rx="1"/>
-            <rect x="5" y="23" width="12" height="1.5" fill="#6E5F50" rx="1"/>
-            <rect x="5" y="30" width="24" height="2" fill="#4E4035" rx="1"/>
-          </svg>
-          <div style="display:inline-block; padding:5px 10px; background:#1C1710; color:#F7F2E8; font-size:6px; letter-spacing:0.15em; font-weight:700; text-transform:uppercase; font-family:'IBM Plex Mono',monospace;">[ SCAN RECEIPT ]</div>
+      <div class="phone-frame" style="width:210px; margin:0 auto;">
+        <div class="phone-screen" style="max-height:340px;">
+          <img src="/bill-scan.png" alt="James app start screen — scan receipt">
         </div>
       </div>
     </div>
 
     <div style="border-top:1px dashed #D5C8B5; margin-bottom:36px;"></div>
 
-    <!-- STEP 02 -->
+    <!-- STEP 02: SPLIT -->
     <div style="margin-bottom:36px;">
-      <div style="display:flex; align-items:flex-start; gap:16px; margin-bottom:22px;">
+      <div style="display:flex; align-items:flex-start; gap:16px; margin-bottom:24px;">
         <div class="step-num">02 ──</div>
         <div>
-          <div class="step-title">Add names, tap items</div>
-          <p class="step-body">Add everyone at the table. Select a name, tap the items they had. Shared dishes split automatically between however many people.</p>
+          <div class="step-title">Split</div>
+          <p class="step-body">Add everyone at the table. Tap their items. Shared dishes split automatically between however many people.</p>
         </div>
       </div>
-      <div class="phone phone-sm">
-        <div class="screen" style="padding:6px;">
-          <!-- WHO'S SPLITTING -->
-          <div style="background:#EDE6D5; padding:5px 4px; margin:0 -6px; border-bottom:1px solid #D5C8B5; margin-bottom:5px;">
-            <div style="font-size:4px; letter-spacing:0.2em; font-weight:700; color:#1C1710; margin-bottom:4px; text-transform:uppercase;">── WHO'S SPLITTING? ─────</div>
-            <div style="display:flex; gap:2px; margin-bottom:3px;">
-              <span class="chip" style="background:#C4826A;">SARAH ✓</span>
-              <span class="chip" style="background:#6A8FAA;">MIKE</span>
-              <span class="chip" style="background:#7A9A7A;">PRIYA</span>
-            </div>
-            <div style="font-size:4px; color:#4E4035; letter-spacing:0.08em;">▸ TAP ITEMS TO ASSIGN SARAH</div>
-          </div>
-          <div style="font-size:4px; letter-spacing:0.15em; color:#4E4035; font-weight:700; margin-bottom:4px; text-transform:uppercase;">── ITEMS ─────────────</div>
-          <div style="border-bottom:1px dotted #D5C8B5; padding:2.5px 0;">
-            <div style="display:flex; font-size:5.5px;"><span style="flex:1; text-transform:uppercase; letter-spacing:0.03em; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; padding-right:3px;">Salmon</span><span style="font-weight:600; color:#B0A898; flex-shrink:0;">€18</span></div>
-            <div style="margin-top:2px;"><span class="chip" style="background:#C4826A;">SARAH</span></div>
-          </div>
-          <div style="border-bottom:1px dotted #D5C8B5; padding:2.5px 0; background:rgba(138,96,8,0.05);">
-            <div style="display:flex; font-size:5.5px;"><span style="flex:1; text-transform:uppercase; letter-spacing:0.03em; color:#8A6008;">Risotto</span><span style="font-weight:700; color:#8A6008; flex-shrink:0;">€16</span></div>
-          </div>
-          <div style="border-bottom:1px dotted #D5C8B5; padding:2.5px 0;">
-            <div style="display:flex; font-size:5.5px;"><span style="flex:1; text-transform:uppercase; letter-spacing:0.03em; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; padding-right:3px; color:#B0A898; text-decoration:line-through;">Burger</span><span style="font-weight:600; color:#B0A898; flex-shrink:0;">€14</span></div>
-            <div style="margin-top:2px;"><span class="chip" style="background:#6A8FAA;">MIKE</span></div>
-          </div>
-          <div style="padding:2.5px 0;">
-            <div style="display:flex; font-size:5.5px;"><span style="flex:1; text-transform:uppercase; letter-spacing:0.03em; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; padding-right:3px; color:#B0A898; text-decoration:line-through;">Wine</span><span style="font-weight:600; color:#B0A898; flex-shrink:0;">€28</span></div>
-            <div style="margin-top:2px;">
-              <span class="chip" style="background:#C4826A;">SARAH</span>
-              <span class="chip" style="background:#6A8FAA; margin-left:2px;">MIKE</span>
-              <span class="chip" style="background:#7A9A7A; margin-left:2px;">PRIYA</span>
-            </div>
-          </div>
+      <div class="phone-frame" style="width:210px; margin:0 auto;">
+        <div class="phone-screen" style="max-height:400px; overflow:hidden;">
+          <img src="/bill-split.png" alt="James app showing items being assigned to people" style="margin-top:-58px;">
         </div>
       </div>
     </div>
 
     <div style="border-top:1px dashed #D5C8B5; margin-bottom:36px;"></div>
 
-    <!-- STEP 03 -->
+    <!-- STEP 03: SHARE -->
     <div>
-      <div style="display:flex; align-items:flex-start; gap:16px; margin-bottom:22px;">
+      <div style="display:flex; align-items:flex-start; gap:16px; margin-bottom:28px;">
         <div class="step-num">03 ──</div>
         <div>
-          <div class="step-title">Share in one tap</div>
-          <p class="step-body">Each person gets their own clean receipt — exactly what they ordered, their cut of the tax and tip, and their total. No group chat maths required.</p>
+          <div class="step-title">Share</div>
+          <p class="step-body">Each person gets their own clean receipt — exactly what they ordered, their cut of the tax and tip, and their total.</p>
         </div>
       </div>
-      <div class="phone phone-sm">
-        <div class="screen" style="padding:6px;">
-          <div style="font-size:4.5px; letter-spacing:0.2em; color:#4E4035; font-weight:700; text-transform:uppercase; padding-bottom:5px; margin-bottom:5px; border-bottom:2px solid #1C1710;">── SUMMARY ──────────</div>
-          <div style="border-bottom:1px dotted #D5C8B5; padding:3.5px 0;">
-            <div style="display:flex; align-items:center; font-size:6px;">
-              <span style="width:10px; color:#C4826A; font-size:9px; line-height:1;">▸</span>
-              <span style="flex:1; font-weight:700; text-transform:uppercase; letter-spacing:0.05em;">Sarah</span>
-              <div style="text-align:right;">
-                <div style="font-weight:700; font-size:7px;">€28.40</div>
-                <div style="font-size:4.5px; color:#C4826A; font-weight:700; letter-spacing:0.1em;">VIEW & SHARE ↗</div>
-              </div>
-            </div>
-          </div>
-          <div style="border-bottom:1px dotted #D5C8B5; padding:3.5px 0;">
-            <div style="display:flex; align-items:center; font-size:6px;">
-              <span style="width:10px; color:#6A8FAA; font-size:9px; line-height:1;">▸</span>
-              <span style="flex:1; font-weight:700; text-transform:uppercase; letter-spacing:0.05em;">Mike</span>
-              <div style="text-align:right;">
-                <div style="font-weight:700; font-size:7px;">€27.10</div>
-                <div style="font-size:4.5px; color:#6A8FAA; font-weight:700; letter-spacing:0.1em;">VIEW & SHARE ↗</div>
-              </div>
-            </div>
-          </div>
-          <div style="padding:3.5px 0; margin-bottom:8px;">
-            <div style="display:flex; align-items:center; font-size:6px;">
-              <span style="width:10px; color:#7A9A7A; font-size:9px; line-height:1;">▸</span>
-              <span style="flex:1; font-weight:700; text-transform:uppercase; letter-spacing:0.05em;">Priya</span>
-              <div style="text-align:right;">
-                <div style="font-weight:700; font-size:7px;">€20.30</div>
-                <div style="font-size:4.5px; color:#7A9A7A; font-weight:700; letter-spacing:0.1em;">VIEW & SHARE ↗</div>
-              </div>
-            </div>
-          </div>
-          <div style="background:#C4826A; padding:6px 4px; text-align:center;">
-            <div style="font-size:6px; letter-spacing:0.15em; font-weight:700; color:#F7F2E8; text-transform:uppercase; font-family:'IBM Plex Mono',monospace;">SHARE WITH SARAH ↗</div>
-          </div>
-        </div>
+
+      <!-- Receipt fan collage -->
+      <div style="position:relative; height:310px;">
+        <img src="/oliver.png" alt="Oliver's receipt"
+          style="position:absolute; width:145px; left:0; top:30px; transform:rotate(-11deg); border-radius:3px; box-shadow:0 6px 28px rgba(28,23,16,0.28);">
+        <img src="/eoin.png" alt="Eoin's receipt"
+          style="position:absolute; width:145px; left:75px; top:8px; transform:rotate(-3deg); border-radius:3px; box-shadow:0 8px 28px rgba(28,23,16,0.30);">
+        <img src="/peter.png" alt="Peter's receipt"
+          style="position:absolute; width:145px; right:75px; top:14px; transform:rotate(4deg); border-radius:3px; box-shadow:0 8px 28px rgba(28,23,16,0.32);">
+        <img src="/michelle.png" alt="Michelle's receipt"
+          style="position:absolute; width:145px; right:0; top:38px; transform:rotate(12deg); border-radius:3px; box-shadow:0 6px 28px rgba(28,23,16,0.34);">
       </div>
     </div>
   </div>
