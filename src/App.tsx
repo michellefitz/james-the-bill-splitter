@@ -558,7 +558,7 @@ export default function App() {
           style={{
             padding: '28px 24px 20px',
             textAlign: 'center',
-            borderBottom: `1px dashed ${rule}`,
+            borderBottom: receipt ? `1px dashed ${rule}` : 'none',
           }}
         >
           <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '16px' }}>
@@ -570,32 +570,35 @@ export default function App() {
               letterSpacing: '0.35em',
               textTransform: 'uppercase',
               color: inkMid,
-              marginBottom: '10px',
+              marginBottom: receipt ? '10px' : 0,
             }}
           >
             ★ JAMES ★ THE BILL SPLITTER ★
           </div>
-          <div
-            style={{
-              borderTop: `1px solid ${rule}`,
-              borderBottom: `1px solid ${rule}`,
-              padding: '8px 0',
-              marginBottom: '16px',
-            }}
-          >
-            <h1
+          {receipt && (
+            <div
               style={{
-                fontSize: receipt?.restaurantName ? '20px' : '13px',
-                fontWeight: 700,
-                letterSpacing: receipt?.restaurantName ? '0.05em' : '0.2em',
-                textTransform: 'uppercase',
-                color: receipt?.restaurantName ? '#1C1710' : inkLight,
-                margin: 0,
+                borderTop: `1px solid ${rule}`,
+                borderBottom: `1px solid ${rule}`,
+                padding: '8px 0',
+                marginBottom: '16px',
+                marginTop: '10px',
               }}
             >
-              {receipt?.restaurantName || 'AWAITING RECEIPT'}
-            </h1>
-          </div>
+              <h1
+                style={{
+                  fontSize: '20px',
+                  fontWeight: 700,
+                  letterSpacing: '0.05em',
+                  textTransform: 'uppercase',
+                  color: '#1C1710',
+                  margin: 0,
+                }}
+              >
+                {receipt.restaurantName || 'RECEIPT'}
+              </h1>
+            </div>
+          )}
           {receipt && (
             <button
               onClick={() => fileInputRef.current?.click()}
