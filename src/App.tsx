@@ -558,7 +558,7 @@ export default function App() {
           style={{
             padding: '28px 24px 20px',
             textAlign: 'center',
-            borderBottom: receipt ? `1px dashed ${rule}` : 'none',
+            borderBottom: `1px dashed ${rule}`,
           }}
         >
           <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '16px' }}>
