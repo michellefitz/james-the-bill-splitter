@@ -571,7 +571,7 @@ export default function App() {
 
         <div style={{ padding: '0 24px', flex: 1 }}>
           {/* ── Splitters section ───────────────────────────────────────── */}
-          <div style={{ padding: '20px 0', borderBottom: `1px dashed ${rule}` }}>
+          {receipt && <div style={{ padding: '20px 0', borderBottom: `1px dashed ${rule}` }}>
             <div
               style={{
                 fontSize: '9px',
@@ -601,11 +601,10 @@ export default function App() {
                   textTransform: 'uppercase',
                   background: 'transparent',
                   border: 'none',
-                  borderBottom: `1px solid ${receipt && people.length === 0 ? amber : rule}`,
+                  borderBottom: `1px solid ${rule}`,
                   color: '#1C1710',
                   fontFamily: '"IBM Plex Mono", monospace',
                   outline: 'none',
-                  transition: 'border-color 0.3s',
                 }}
               />
               <button
@@ -662,14 +661,6 @@ export default function App() {
                   );
                 })}
               </div>
-            ) : receipt ? (
-              <motion.p
-                animate={{ opacity: [0.6, 1, 0.6] }}
-                transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
-                style={{ fontSize: '10px', color: amber, letterSpacing: '0.1em', fontWeight: 700 }}
-              >
-                TYPE A NAME + PRESS + ADD TO BEGIN
-              </motion.p>
             ) : (
               <p style={{ fontSize: '10px', color: inkLight, letterSpacing: '0.1em' }}>
                 ADD NAMES TO BEGIN
@@ -712,7 +703,7 @@ export default function App() {
                 </motion.p>
               ) : null}
             </AnimatePresence>
-          </div>
+          </div>}
 
           {/* ── No receipt state ────────────────────────────────────────── */}
           {!receipt ? (
@@ -734,30 +725,6 @@ export default function App() {
             <>
               {/* ── Items ─────────────────────────────────────────────── */}
               <div style={{ padding: '20px 0', borderBottom: `1px dashed ${rule}` }}>
-                {/* Flow callout: receipt loaded but no names added yet */}
-                <AnimatePresence>
-                  {people.length === 0 && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -6 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -6 }}
-                      style={{
-                        marginBottom: '16px',
-                        padding: '10px 12px',
-                        border: `1px dashed ${amber}`,
-                        background: 'rgba(184, 132, 15, 0.05)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '10px',
-                      }}
-                    >
-                      <span style={{ fontSize: '16px', color: amber, lineHeight: 1 }}>↑</span>
-                      <span style={{ fontSize: '9px', letterSpacing: '0.2em', textTransform: 'uppercase', color: amber, fontWeight: 700 }}>
-                        ADD NAMES ABOVE TO START SPLITTING
-                      </span>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
                 <div
                   style={{
                     display: 'flex',
