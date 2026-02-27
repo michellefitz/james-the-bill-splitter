@@ -123,8 +123,8 @@ interface SharedReceiptData {
 
 const SharedReceiptView = ({ data }: { data: SharedReceiptData }) => {
   const rule = '#D5C8B5';
-  const inkMid = '#7A6A57';
-  const inkLight = '#C4B59F';
+  const inkMid = '#4E4035';
+  const inkLight = '#6E5F50';
 
   return (
     <div style={{ background: '#DDD6C8', minHeight: '100vh', fontFamily: '"IBM Plex Mono", monospace' }}>
@@ -412,9 +412,9 @@ export default function App() {
   };
 
   const rule = '#D5C8B5';
-  const inkMid = '#7A6A57';
-  const inkLight = '#C4B59F';
-  const amber = '#B8840F';
+  const inkMid = '#4E4035';
+  const inkLight = '#6E5F50';
+  const amber = '#8A6008';
 
   return (
     <div style={{ background: '#DDD6C8', minHeight: '100vh', fontFamily: '"IBM Plex Mono", monospace' }}>
