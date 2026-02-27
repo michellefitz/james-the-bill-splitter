@@ -546,15 +546,15 @@ export default function App() {
               onClick={() => fileInputRef.current?.click()}
               disabled={isUploading}
               style={{
-                padding: '8px 20px',
-                fontSize: '10px',
+                padding: '7px 16px',
+                fontSize: '9px',
                 letterSpacing: '0.2em',
                 textTransform: 'uppercase',
-                fontWeight: 700,
+                fontWeight: 600,
                 fontFamily: '"IBM Plex Mono", monospace',
-                border: `1px solid #1C1710`,
-                background: '#1C1710',
-                color: '#F7F2E8',
+                border: `1px solid ${rule}`,
+                background: 'transparent',
+                color: inkMid,
                 cursor: 'pointer',
                 transition: 'all 0.15s',
               }}
@@ -573,17 +573,23 @@ export default function App() {
 
         <div style={{ padding: '0 24px', flex: 1 }}>
           {/* ── Splitters section ───────────────────────────────────────── */}
-          {receipt && <div style={{ padding: '20px 0', borderBottom: `1px dashed ${rule}` }}>
+          {receipt && <div style={{
+            margin: '0 -24px',
+            padding: '20px 24px',
+            background: '#EDE6D5',
+            borderBottom: `1px solid ${rule}`,
+          }}>
             <div
               style={{
                 fontSize: '9px',
-                letterSpacing: '0.25em',
+                letterSpacing: '0.3em',
                 textTransform: 'uppercase',
-                color: inkMid,
+                color: '#1C1710',
+                fontWeight: 700,
                 marginBottom: '14px',
               }}
             >
-              ── SPLITTERS ───────────────────
+              ── WHO'S SPLITTING? ────────────
             </div>
 
             <form
@@ -594,16 +600,15 @@ export default function App() {
                 type="text"
                 value={newPersonName}
                 onChange={(e) => setNewPersonName(e.target.value)}
-                placeholder="ADD NAME..."
+                placeholder="Enter a name..."
                 style={{
                   flex: 1,
-                  padding: '8px 0',
+                  padding: '9px 10px',
                   fontSize: '12px',
-                  letterSpacing: '0.1em',
-                  textTransform: 'uppercase',
-                  background: 'transparent',
-                  border: 'none',
-                  borderBottom: `1px solid ${rule}`,
+                  letterSpacing: '0.05em',
+                  background: '#F7F2E8',
+                  border: `1px solid ${rule}`,
+                  borderRadius: '2px',
                   color: '#1C1710',
                   fontFamily: '"IBM Plex Mono", monospace',
                   outline: 'none',
@@ -613,24 +618,25 @@ export default function App() {
                 type="submit"
                 disabled={!newPersonName.trim()}
                 style={{
-                  padding: '8px 14px',
-                  fontSize: '10px',
-                  letterSpacing: '0.15em',
+                  padding: '9px 18px',
+                  fontSize: '11px',
+                  letterSpacing: '0.1em',
                   fontWeight: 700,
                   fontFamily: '"IBM Plex Mono", monospace',
-                  border: `1px solid #1C1710`,
-                  background: 'transparent',
-                  color: '#1C1710',
-                  cursor: 'pointer',
-                  opacity: newPersonName.trim() ? 1 : 0.3,
-                  transition: 'opacity 0.15s',
+                  border: 'none',
+                  background: newPersonName.trim() ? '#1C1710' : rule,
+                  color: newPersonName.trim() ? '#F7F2E8' : inkLight,
+                  cursor: newPersonName.trim() ? 'pointer' : 'default',
+                  transition: 'all 0.15s',
+                  borderRadius: '2px',
+                  flexShrink: 0,
                 }}
               >
                 + ADD
               </button>
             </form>
 
-            {people.length > 0 ? (
+            {people.length > 0 && (
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
                 {people.map((person) => {
                   const color = getPersonColor(person, people);
@@ -663,10 +669,6 @@ export default function App() {
                   );
                 })}
               </div>
-            ) : (
-              <p style={{ fontSize: '10px', color: inkLight, letterSpacing: '0.1em' }}>
-                ADD NAMES TO BEGIN
-              </p>
             )}
 
             <AnimatePresence mode="wait">
