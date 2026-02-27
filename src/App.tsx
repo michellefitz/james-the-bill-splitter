@@ -143,7 +143,7 @@ const SharedReceiptView = ({ data }: { data: SharedReceiptData }) => {
               {data.restaurant || 'THE BILL'}
             </h1>
           </div>
-          <div style={{ fontSize: '22px', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase' }}>
+          <div style={{ fontSize: '14px', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', color: inkMid }}>
             HEY, {data.person.toUpperCase()}!
           </div>
         </div>
