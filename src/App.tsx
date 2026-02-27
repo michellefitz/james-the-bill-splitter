@@ -871,10 +871,7 @@ export default function App() {
                               textOverflow: 'ellipsis',
                               whiteSpace: 'nowrap',
                               paddingRight: '8px',
-                              color: isAssigned && !isAssignedToSelected ? inkMid : '#1C1710',
-                              textDecoration:
-                                isAssigned && !isAssignedToSelected ? 'line-through' : 'none',
-                              textDecorationColor: inkLight,
+                              color: isAssigned && !isAssignedToSelected ? '#B0A898' : '#1C1710',
                             }}
                           >
                             {item.name.toUpperCase()}
