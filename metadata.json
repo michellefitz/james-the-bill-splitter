@@ -1,0 +1,5 @@
+{
+  "name": "James - The Bill splitter",
+  "description": "AI-powered bill splitter that parses receipts and assigns costs via natural language chat.",
+  "requestFramePermissions": []
+}
