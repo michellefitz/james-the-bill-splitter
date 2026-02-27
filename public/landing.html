@@ -22,19 +22,14 @@
       box-shadow: 0 0 80px rgba(28,23,16,0.18);
     }
 
-    .phone-frame {
-      background: #1C1710;
-      border-radius: 22px;
-      padding: 7px;
-      box-shadow: 0 12px 40px rgba(28,23,16,0.4);
-      display: block;
-    }
-    .phone-screen {
-      border-radius: 16px;
+    .screenshot {
       overflow: hidden;
+      border-radius: 8px;
+      box-shadow: 0 8px 32px rgba(28,23,16,0.22);
     }
-    .phone-screen img {
-      width: 100%;
+    .screenshot img {
+      width: 110%;
+      margin-left: -5%;
       display: block;
     }
 
@@ -108,10 +103,8 @@
 
   <!-- ── HERO SCREENSHOT ────────────────────────────────────────────────── -->
   <div style="padding:40px 28px; background:#EDE6D5; border-bottom:1px dashed #D5C8B5; display:flex; justify-content:center;">
-    <div class="phone-frame" style="width:230px;">
-      <div class="phone-screen">
-        <img src="/bill-split.png" alt="James app showing bill being split between Peter, Eoin, Oliver and Michelle">
-      </div>
+    <div class="screenshot" style="width:280px;">
+      <img src="/bill-split.png" alt="James app showing bill being split between Peter, Eoin, Oliver and Michelle">
     </div>
   </div>
 
@@ -122,7 +115,7 @@
       Every friend group<br>has one.
     </h2>
     <p style="font-size:12px; color:#4E4035; line-height:1.85; margin-bottom:16px;">
-      The person who quietly works out the bill while everyone else orders dessert. Dividing starters, tracking who had the extra glass, calculating the service charge.
+      The person who quietly works out the bill while everyone else finishes their wine. Dividing starters, tracking who had the extra glass, calculating the service charge.
     </p>
     <p style="font-size:13px; color:#1C1710; font-weight:600; line-height:1.8; font-style:italic;">
       We built James to give them a night off.
@@ -142,10 +135,8 @@
           <p class="step-body">Take a photo of the receipt. James reads every line item, the tax, and the total. Even the scruffy ones.</p>
         </div>
       </div>
-      <div class="phone-frame" style="width:210px; margin:0 auto;">
-        <div class="phone-screen" style="max-height:340px;">
-          <img src="/bill-scan.png" alt="James app start screen — scan receipt">
-        </div>
+      <div class="screenshot" style="width:240px; margin:0 auto; max-height:380px;">
+        <img src="/bill-scan.png" alt="James app start screen — scan receipt">
       </div>
     </div>
 
@@ -160,10 +151,8 @@
           <p class="step-body">Add everyone at the table. Tap their items. Shared dishes split automatically between however many people.</p>
         </div>
       </div>
-      <div class="phone-frame" style="width:210px; margin:0 auto;">
-        <div class="phone-screen" style="max-height:400px; overflow:hidden;">
-          <img src="/bill-split.png" alt="James app showing items being assigned to people" style="margin-top:-58px;">
-        </div>
+      <div class="screenshot" style="width:240px; margin:0 auto; max-height:420px;">
+        <img src="/bill-split.png" alt="James app showing items being assigned to people" style="margin-top:-58px;">
       </div>
     </div>
 
@@ -181,14 +170,18 @@
 
       <!-- Receipt fan collage -->
       <div style="position:relative; height:310px;">
-        <img src="/oliver.png" alt="Oliver's receipt"
-          style="position:absolute; width:145px; left:0; top:30px; transform:rotate(-11deg); border-radius:3px; box-shadow:0 6px 28px rgba(28,23,16,0.28);">
-        <img src="/eoin.png" alt="Eoin's receipt"
-          style="position:absolute; width:145px; left:75px; top:8px; transform:rotate(-3deg); border-radius:3px; box-shadow:0 8px 28px rgba(28,23,16,0.30);">
-        <img src="/peter.png" alt="Peter's receipt"
-          style="position:absolute; width:145px; right:75px; top:14px; transform:rotate(4deg); border-radius:3px; box-shadow:0 8px 28px rgba(28,23,16,0.32);">
-        <img src="/michelle.png" alt="Michelle's receipt"
-          style="position:absolute; width:145px; right:0; top:38px; transform:rotate(12deg); border-radius:3px; box-shadow:0 6px 28px rgba(28,23,16,0.34);">
+        <div style="position:absolute; width:145px; overflow:hidden; border-radius:3px; box-shadow:0 6px 28px rgba(28,23,16,0.28); left:0; top:30px; transform:rotate(-11deg);">
+          <img src="/oliver.png" alt="Oliver's receipt" style="width:110%; margin-left:-5%; display:block;">
+        </div>
+        <div style="position:absolute; width:145px; overflow:hidden; border-radius:3px; box-shadow:0 8px 28px rgba(28,23,16,0.30); left:75px; top:8px; transform:rotate(-3deg);">
+          <img src="/eoin.png" alt="Eoin's receipt" style="width:110%; margin-left:-5%; display:block;">
+        </div>
+        <div style="position:absolute; width:145px; overflow:hidden; border-radius:3px; box-shadow:0 8px 28px rgba(28,23,16,0.32); right:75px; top:14px; transform:rotate(4deg);">
+          <img src="/peter.png" alt="Peter's receipt" style="width:110%; margin-left:-5%; display:block;">
+        </div>
+        <div style="position:absolute; width:145px; overflow:hidden; border-radius:3px; box-shadow:0 6px 28px rgba(28,23,16,0.34); right:0; top:38px; transform:rotate(12deg);">
+          <img src="/michelle.png" alt="Michelle's receipt" style="width:110%; margin-left:-5%; display:block;">
+        </div>
       </div>
     </div>
   </div>
