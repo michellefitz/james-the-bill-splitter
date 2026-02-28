@@ -887,20 +887,6 @@ export default function App() {
                         <div style={{ display: 'flex', alignItems: 'center' }}>
                           <span
                             style={{
-                              width: '20px',
-                              fontSize: '11px',
-                              flexShrink: 0,
-                              color: isAssignedToSelected
-                                ? amber
-                                : isAssigned
-                                ? '#484848'
-                                : inkLight,
-                            }}
-                          >
-                            {isAssignedToSelected ? '✓' : isAssigned ? '·' : ' '}
-                          </span>
-                          <span
-                            style={{
                               fontSize: '12px',
                               fontWeight: 500,
                               flex: 1,
