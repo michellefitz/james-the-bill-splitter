@@ -184,7 +184,7 @@ const SharedReceiptView = ({ data }: { data: SharedReceiptData }) => {
         </div>
         <div style={{ padding: '20px 24px', textAlign: 'center', borderTop: `1px dashed ${rule}` }}>
           <div style={{ fontSize: '9px', letterSpacing: '0.3em', textTransform: 'uppercase', color: inkLight, lineHeight: '1.8' }}>
-            ★ THANK YOU ★ PLEASE COME AGAIN ★<br />POWERED BY JAMES v1.0
+            ★ THANK YOU ★ PLEASE COME AGAIN ★
           </div>
           <div style={{ marginTop: '16px' }}>
             <a
@@ -1368,8 +1368,6 @@ export default function App() {
             }}
           >
             ★ THANK YOU ★ PLEASE COME AGAIN ★
-            <br />
-            POWERED BY JAMES v1.0
           </div>
           <div style={{ marginTop: '16px' }}>
             <a
