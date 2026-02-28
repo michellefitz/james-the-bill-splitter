@@ -1203,128 +1203,134 @@ export default function App() {
                   ── SUMMARY ──────────────────────
                 </div>
 
-                {/* Person cards grid */}
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '4px' }}>
+                {/* Person cards */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '4px' }}>
                   {Object.entries(personTotals).map(([person, breakdown]) => {
                     const isExpanded = expandedPerson === person;
                     return (
-                      <button
+                      <div
                         key={person}
-                        onClick={() => setExpandedPerson(isExpanded ? null : person)}
                         style={{
-                          width: 'calc(50% - 4px)',
-                          padding: '12px',
-                          background: isExpanded ? '#F0F0F0' : 'transparent',
-                          border: `1px solid ${isExpanded ? '#0A0A0A' : rule}`,
-                          cursor: 'pointer',
-                          fontFamily: '"IBM Plex Mono", monospace',
-                          textAlign: 'left',
-                          display: 'flex',
-                          flexDirection: 'column',
-                          gap: '8px',
-                          transition: 'all 0.15s',
+                          border: `1px solid ${isExpanded ? '#0A0A0A' : '#D8D8D8'}`,
+                          background: isExpanded ? '#0A0A0A' : '#F0F0F0',
+                          transition: 'background 0.15s, border-color 0.15s',
                         }}
                       >
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '7px' }}>
+                        {/* Clickable header */}
+                        <button
+                          onClick={() => setExpandedPerson(isExpanded ? null : person)}
+                          style={{
+                            width: '100%',
+                            padding: '10px 12px',
+                            background: 'transparent',
+                            border: 'none',
+                            cursor: 'pointer',
+                            fontFamily: '"IBM Plex Mono", monospace',
+                            textAlign: 'left',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '8px',
+                          }}
+                        >
+                          {/* Icon + name */}
                           <svg width="11" height="15" viewBox="0 0 11 15" fill="none" style={{ flexShrink: 0 }}>
-                            <rect x="0" y="0" width="11" height="11" fill={isExpanded ? '#0A0A0A' : inkMid} rx="1"/>
-                            <path d="M0 11 L1.375 14 L2.75 11 L4.125 14 L5.5 11 L6.875 14 L8.25 11 L9.625 14 L11 11 Z" fill={isExpanded ? '#0A0A0A' : inkMid}/>
-                            <rect x="2" y="2.5" width="7" height="1" fill="#FAFAFA" rx="0.5"/>
-                            <rect x="2" y="5" width="5" height="1" fill="#FAFAFA" rx="0.5"/>
-                            <rect x="2" y="7.5" width="6" height="1" fill="#FAFAFA" rx="0.5"/>
+                            <rect x="0" y="0" width="11" height="11" fill={isExpanded ? '#FAFAFA' : inkMid} rx="1"/>
+                            <path d="M0 11 L1.375 14 L2.75 11 L4.125 14 L5.5 11 L6.875 14 L8.25 11 L9.625 14 L11 11 Z" fill={isExpanded ? '#FAFAFA' : inkMid}/>
+                            <rect x="2" y="2.5" width="7" height="1" fill={isExpanded ? '#0A0A0A' : '#FAFAFA'} rx="0.5"/>
+                            <rect x="2" y="5" width="5" height="1" fill={isExpanded ? '#0A0A0A' : '#FAFAFA'} rx="0.5"/>
+                            <rect x="2" y="7.5" width="6" height="1" fill={isExpanded ? '#0A0A0A' : '#FAFAFA'} rx="0.5"/>
                           </svg>
-                          <span style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: isExpanded ? '#0A0A0A' : inkMid, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                          <span style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: isExpanded ? '#FAFAFA' : '#0A0A0A', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1 }}>
                             {person}
                           </span>
-                        </div>
-                        <span style={{ fontSize: '14px', fontWeight: 700, fontVariantNumeric: 'tabular-nums', color: '#0A0A0A', letterSpacing: '0.02em' }}>
-                          {formatCurrency(receipt.currency)} {breakdown.total.toFixed(2)}
-                        </span>
-                      </button>
+                          {/* Amount right-aligned */}
+                          <span style={{ fontSize: '13px', fontWeight: 700, fontVariantNumeric: 'tabular-nums', color: isExpanded ? '#FAFAFA' : '#0A0A0A', letterSpacing: '0.02em', flexShrink: 0 }}>
+                            {formatCurrency(receipt.currency)} {breakdown.total.toFixed(2)}
+                          </span>
+                          {/* Share icon */}
+                          <svg width="13" height="13" viewBox="0 0 13 13" fill="none" style={{ flexShrink: 0 }}>
+                            <rect x="1" y="5" width="11" height="7" rx="1" stroke={isExpanded ? 'rgba(250,250,250,0.5)' : inkLight} strokeWidth="1.2"/>
+                            <path d="M6.5 1 L6.5 8" stroke={isExpanded ? 'rgba(250,250,250,0.5)' : inkLight} strokeWidth="1.2" strokeLinecap="round"/>
+                            <path d="M4 3.5 L6.5 1 L9 3.5" stroke={isExpanded ? 'rgba(250,250,250,0.5)' : inkLight} strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+                          </svg>
+                        </button>
+
+                        {/* Inline expansion */}
+                        <AnimatePresence>
+                          {isExpanded && (
+                            <motion.div
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: 'auto', opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              style={{ overflow: 'hidden' }}
+                            >
+                              <div style={{ borderTop: `1px dashed rgba(255,255,255,0.15)`, background: '#F0F0F0' }}>
+                                {/* Items */}
+                                <div style={{ padding: '8px 12px', borderBottom: `1px dashed ${rule}` }}>
+                                  {breakdown.items.map((item: { name: string; share: number; splitCount: number }, idx: number) => (
+                                    <div key={idx} style={{ display: 'flex', alignItems: 'center', fontSize: '10px', color: inkMid, padding: '3px 0' }}>
+                                      <span style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', paddingRight: '8px' }}>
+                                        {item.name.toUpperCase()}
+                                        {item.splitCount > 1 && (
+                                          <span style={{ fontSize: '9px', color: inkLight, fontStyle: 'italic', marginLeft: '6px', textTransform: 'lowercase' }}>({splitLabel(item.splitCount)})</span>
+                                        )}
+                                      </span>
+                                      <span style={{ fontVariantNumeric: 'tabular-nums', flexShrink: 0 }}>
+                                        {formatCurrency(receipt.currency)} {item.share.toFixed(2)}
+                                      </span>
+                                    </div>
+                                  ))}
+                                </div>
+                                {/* Totals */}
+                                <div style={{ padding: '8px 12px', fontSize: '10px', color: inkMid, borderBottom: `1px dashed ${rule}` }}>
+                                  <div style={{ display: 'flex', justifyContent: 'space-between', padding: '2px 0' }}>
+                                    <span>SUBTOTAL {receipt.itemsIncludeTax && <span style={{ color: inkLight }}>(TAX INCL.)</span>}</span>
+                                    <span style={{ fontVariantNumeric: 'tabular-nums' }}>{formatCurrency(receipt.currency)} {breakdown.subtotal.toFixed(2)}</span>
+                                  </div>
+                                  {!receipt.itemsIncludeTax && (
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', padding: '2px 0' }}>
+                                      <span>TAX</span>
+                                      <span style={{ fontVariantNumeric: 'tabular-nums' }}>{formatCurrency(receipt.currency)} {breakdown.tax.toFixed(2)}</span>
+                                    </div>
+                                  )}
+                                  <div style={{ display: 'flex', justifyContent: 'space-between', padding: '2px 0' }}>
+                                    <span>TIP</span>
+                                    <span style={{ fontVariantNumeric: 'tabular-nums' }}>{formatCurrency(receipt.currency)} {breakdown.tip.toFixed(2)}</span>
+                                  </div>
+                                  <div style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 0 2px', marginTop: '4px', borderTop: `1px solid #0A0A0A`, fontWeight: 700, fontSize: '12px', color: '#0A0A0A' }}>
+                                    <span>TOTAL</span>
+                                    <span style={{ fontVariantNumeric: 'tabular-nums' }}>{formatCurrency(receipt.currency)} {breakdown.total.toFixed(2)}</span>
+                                  </div>
+                                </div>
+                                {/* Share button */}
+                                <div style={{ padding: '10px 12px' }}>
+                                  <button
+                                    onClick={() => handleShare(person, breakdown)}
+                                    style={{
+                                      width: '100%',
+                                      padding: '8px',
+                                      fontSize: '10px',
+                                      letterSpacing: '0.2em',
+                                      textTransform: 'uppercase',
+                                      fontWeight: 700,
+                                      fontFamily: '"IBM Plex Mono", monospace',
+                                      background: '#0A0A0A',
+                                      color: '#FAFAFA',
+                                      border: 'none',
+                                      cursor: 'pointer',
+                                    }}
+                                  >
+                                    SHARE WITH {person.toUpperCase()} ↗
+                                  </button>
+                                </div>
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
                     );
                   })}
                 </div>
-
-                {/* Expanded mini receipt - full width below cards */}
-                <AnimatePresence>
-                  {expandedPerson && personTotals[expandedPerson] && (
-                    <motion.div
-                      key={expandedPerson}
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: 'auto', opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      style={{ overflow: 'hidden' }}
-                    >
-                      <div style={{ marginTop: '8px', border: `1px dashed ${rule}`, background: '#F0F0F0' }}>
-                        {/* Header */}
-                        <div style={{ padding: '8px 12px', borderBottom: `1px dashed ${rule}`, textAlign: 'center' }}>
-                          <div style={{ fontSize: '9px', letterSpacing: '0.2em', color: inkLight }}>YOUR SHARE</div>
-                          <div style={{ fontSize: '13px', fontWeight: 700, letterSpacing: '0.08em', color: '#0A0A0A' }}>
-                            {expandedPerson.toUpperCase()}
-                          </div>
-                        </div>
-                        {/* Items */}
-                        <div style={{ padding: '8px 12px', borderBottom: `1px dashed ${rule}` }}>
-                          {personTotals[expandedPerson].items.map((item: { name: string; share: number; splitCount: number }, idx: number) => (
-                            <div key={idx} style={{ display: 'flex', alignItems: 'center', fontSize: '10px', color: inkMid, padding: '3px 0' }}>
-                              <span style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', paddingRight: '8px' }}>
-                                {item.name.toUpperCase()}
-                                {item.splitCount > 1 && (
-                                  <span style={{ fontSize: '9px', color: inkLight, fontStyle: 'italic', marginLeft: '6px', textTransform: 'lowercase' }}>({splitLabel(item.splitCount)})</span>
-                                )}
-                              </span>
-                              <span style={{ fontVariantNumeric: 'tabular-nums', flexShrink: 0 }}>
-                                {formatCurrency(receipt.currency)} {item.share.toFixed(2)}
-                              </span>
-                            </div>
-                          ))}
-                        </div>
-                        {/* Totals */}
-                        <div style={{ padding: '8px 12px', fontSize: '10px', color: inkMid, borderBottom: `1px dashed ${rule}` }}>
-                          <div style={{ display: 'flex', justifyContent: 'space-between', padding: '2px 0' }}>
-                            <span>SUBTOTAL {receipt.itemsIncludeTax && <span style={{ color: inkLight }}>(TAX INCL.)</span>}</span>
-                            <span style={{ fontVariantNumeric: 'tabular-nums' }}>{formatCurrency(receipt.currency)} {personTotals[expandedPerson].subtotal.toFixed(2)}</span>
-                          </div>
-                          {!receipt.itemsIncludeTax && (
-                            <div style={{ display: 'flex', justifyContent: 'space-between', padding: '2px 0' }}>
-                              <span>TAX</span>
-                              <span style={{ fontVariantNumeric: 'tabular-nums' }}>{formatCurrency(receipt.currency)} {personTotals[expandedPerson].tax.toFixed(2)}</span>
-                            </div>
-                          )}
-                          <div style={{ display: 'flex', justifyContent: 'space-between', padding: '2px 0' }}>
-                            <span>TIP</span>
-                            <span style={{ fontVariantNumeric: 'tabular-nums' }}>{formatCurrency(receipt.currency)} {personTotals[expandedPerson].tip.toFixed(2)}</span>
-                          </div>
-                          <div style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 0 2px', marginTop: '4px', borderTop: `1px solid #0A0A0A`, fontWeight: 700, fontSize: '12px', color: '#0A0A0A' }}>
-                            <span>TOTAL</span>
-                            <span style={{ fontVariantNumeric: 'tabular-nums' }}>{formatCurrency(receipt.currency)} {personTotals[expandedPerson].total.toFixed(2)}</span>
-                          </div>
-                        </div>
-                        {/* Share button */}
-                        <div style={{ padding: '10px 12px', textAlign: 'center' }}>
-                          <button
-                            onClick={() => handleShare(expandedPerson, personTotals[expandedPerson])}
-                            style={{
-                              width: '100%',
-                              padding: '8px',
-                              fontSize: '10px',
-                              letterSpacing: '0.2em',
-                              textTransform: 'uppercase',
-                              fontWeight: 700,
-                              fontFamily: '"IBM Plex Mono", monospace',
-                              background: '#0A0A0A',
-                              color: '#FAFAFA',
-                              border: 'none',
-                              cursor: 'pointer',
-                            }}
-                          >
-                            SHARE WITH {expandedPerson.toUpperCase()} ↗
-                          </button>
-                        </div>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
 
                 {/* Unassigned */}
                 {unassigned && (
