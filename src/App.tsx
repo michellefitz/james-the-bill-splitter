@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import jamesImg from './james.jpeg';
+import jamesImg from './james.png';
 import { Upload, CheckCircle2, Plus, X, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { clsx, type ClassValue } from 'clsx';
@@ -122,7 +122,7 @@ const SharedReceiptView = ({ data }: { data: SharedReceiptData }) => {
         <PerforatedEdge />
         <div style={{ padding: '28px 24px 20px', textAlign: 'center', borderBottom: `1px dashed ${rule}` }}>
           <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '16px' }}>
-            <JamesIcon size={80} />
+            <JamesIcon size={60} />
           </div>
           <div style={{ fontSize: '9px', letterSpacing: '0.35em', textTransform: 'uppercase', color: inkMid, marginBottom: '10px' }}>
             ★ JAMES ★ THE BILL SPLITTER ★
@@ -516,7 +516,7 @@ export default function App() {
                 transition={{ repeat: Infinity, duration: 1.2, ease: 'easeInOut' }}
                 style={{ mixBlendMode: 'multiply' }}
               >
-                <JamesIcon size={80} className="mb-6" />
+                <JamesIcon size={60} className="mb-6" />
               </motion.div>
             <div style={{ textAlign: 'center' }}>
               <div
@@ -581,7 +581,7 @@ export default function App() {
           }}
         >
           <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '16px' }}>
-            <JamesIcon size={80} />
+            <JamesIcon size={60} />
           </div>
           <div
             style={{
