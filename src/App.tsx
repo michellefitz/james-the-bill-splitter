@@ -672,7 +672,7 @@ export default function App() {
                 style={{
                   flex: 1,
                   padding: '9px 10px',
-                  fontSize: '12px',
+                  fontSize: '16px',
                   letterSpacing: '0.05em',
                   background: '#FAFAFA',
                   border: `1px solid ${rule}`,
