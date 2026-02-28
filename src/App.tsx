@@ -936,7 +936,7 @@ export default function App() {
                                     textTransform: 'uppercase',
                                     fontWeight: 700,
                                     background: 'transparent',
-                                    color: inkMid,
+                                    color: isAssigned && !isAssignedToSelected ? '#AEAEAE' : inkMid,
                                     border: `1px solid ${rule}`,
                                     display: 'inline-flex',
                                     alignItems: 'center',
