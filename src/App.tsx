@@ -1203,219 +1203,148 @@ export default function App() {
                   ── SUMMARY ──────────────────────
                 </div>
 
-                <div>
+                {/* Person cards grid */}
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '4px' }}>
                   {Object.entries(personTotals).map(([person, breakdown]) => {
                     const isExpanded = expandedPerson === person;
-
                     return (
-                      <div
-                        key={person}
-                        style={{ borderBottom: `1px dotted ${rule}` }}
-                      >
-                        <button
-                          onClick={() => setExpandedPerson(isExpanded ? null : person)}
-                          style={{
-                            width: '100%',
-                            display: 'flex',
-                            alignItems: 'center',
-                            padding: '12px 0',
-                            background: 'none',
-                            border: 'none',
-                            cursor: 'pointer',
-                            fontFamily: '"IBM Plex Mono", monospace',
-                            textAlign: 'left',
-                          }}
-                        >
-                          <span
-                            style={{
-                              width: '24px',
-                              fontSize: '15px',
-                              color: inkMid,
-                              flexShrink: 0,
-                              lineHeight: 1,
-                            }}
-                          >
-                            {isExpanded ? '▾' : '▸'}
-                          </span>
-                          <span
-                            style={{
-                              flex: 1,
-                              fontSize: '12px',
-                              fontWeight: 700,
-                              letterSpacing: '0.08em',
-                              textTransform: 'uppercase',
-                              color: '#0A0A0A',
-                            }}
-                          >
-                            {person}
-                          </span>
-                          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '3px' }}>
-                            <span
-                              style={{
-                                fontSize: '14px',
-                                fontWeight: 700,
-                                fontVariantNumeric: 'tabular-nums',
-                                color: '#0A0A0A',
-                              }}
-                            >
-                              {formatCurrency(receipt.currency)} {breakdown.total.toFixed(2)}
-                            </span>
-                            {!isExpanded && (
-                              <span style={{
-                                fontSize: '8px',
-                                letterSpacing: '0.15em',
-                                textTransform: 'uppercase',
-                                fontWeight: 700,
-                                color: amber,
-                              }}>
-                                VIEW & SHARE ↗
-                              </span>
-                            )}
-                          </div>
-                        </button>
-
-                        <AnimatePresence>
-                          {isExpanded && (
-                            <motion.div
-                              initial={{ height: 0, opacity: 0 }}
-                              animate={{ height: 'auto', opacity: 1 }}
-                              exit={{ height: 0, opacity: 0 }}
-                              style={{ overflow: 'hidden' }}
-                            >
-                              {/* Mini receipt card */}
-                              <div style={{ margin: '0 0 12px 0', border: `1px dashed ${rule}`, background: '#F0F0F0' }}>
-                                {/* Mini receipt header */}
-                                <div style={{ padding: '8px 12px', borderBottom: `1px dashed ${rule}`, textAlign: 'center' }}>
-                                  <div style={{ fontSize: '9px', letterSpacing: '0.2em', color: inkLight }}>YOUR SHARE</div>
-                                  <div style={{ fontSize: '13px', fontWeight: 700, letterSpacing: '0.08em', color: '#0A0A0A' }}>
-                                    {person.toUpperCase()}
-                                  </div>
-                                </div>
-
-                                {/* Items */}
-                                <div style={{ padding: '8px 12px', borderBottom: `1px dashed ${rule}` }}>
-                                  {breakdown.items.map((item: { name: string; share: number; splitCount: number }, idx: number) => (
-                                    <div key={idx} style={{ display: 'flex', alignItems: 'center', fontSize: '10px', color: inkMid, padding: '3px 0' }}>
-                                      <span style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', paddingRight: '8px' }}>
-                                        {item.name.toUpperCase()}
-                                        {item.splitCount > 1 && (
-                                          <span style={{ fontSize: '9px', color: inkLight, fontStyle: 'italic', marginLeft: '6px', textTransform: 'lowercase' }}>({splitLabel(item.splitCount)})</span>
-                                        )}
-                                      </span>
-                                      <span style={{ fontVariantNumeric: 'tabular-nums', flexShrink: 0 }}>
-                                        {formatCurrency(receipt.currency)} {item.share.toFixed(2)}
-                                      </span>
-                                    </div>
-                                  ))}
-                                </div>
-
-                                {/* Totals */}
-                                <div style={{ padding: '8px 12px', fontSize: '10px', color: inkMid, borderBottom: `1px dashed ${rule}` }}>
-                                  <div style={{ display: 'flex', justifyContent: 'space-between', padding: '2px 0' }}>
-                                    <span>SUBTOTAL {receipt.itemsIncludeTax && <span style={{ color: inkLight }}>(TAX INCL.)</span>}</span>
-                                    <span style={{ fontVariantNumeric: 'tabular-nums' }}>{formatCurrency(receipt.currency)} {breakdown.subtotal.toFixed(2)}</span>
-                                  </div>
-                                  {!receipt.itemsIncludeTax && (
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', padding: '2px 0' }}>
-                                      <span>TAX</span>
-                                      <span style={{ fontVariantNumeric: 'tabular-nums' }}>{formatCurrency(receipt.currency)} {breakdown.tax.toFixed(2)}</span>
-                                    </div>
-                                  )}
-                                  <div style={{ display: 'flex', justifyContent: 'space-between', padding: '2px 0' }}>
-                                    <span>TIP</span>
-                                    <span style={{ fontVariantNumeric: 'tabular-nums' }}>{formatCurrency(receipt.currency)} {breakdown.tip.toFixed(2)}</span>
-                                  </div>
-                                  <div style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 0 2px', marginTop: '4px', borderTop: `1px solid #0A0A0A`, fontWeight: 700, fontSize: '12px', color: '#0A0A0A' }}>
-                                    <span>TOTAL</span>
-                                    <span style={{ fontVariantNumeric: 'tabular-nums' }}>{formatCurrency(receipt.currency)} {breakdown.total.toFixed(2)}</span>
-                                  </div>
-                                </div>
-
-                                {/* Share button */}
-                                <div style={{ padding: '10px 12px', textAlign: 'center' }}>
-                                  <button
-                                    onClick={() => handleShare(person, breakdown)}
-                                    style={{
-                                      width: '100%',
-                                      padding: '8px',
-                                      fontSize: '10px',
-                                      letterSpacing: '0.2em',
-                                      textTransform: 'uppercase',
-                                      fontWeight: 700,
-                                      fontFamily: '"IBM Plex Mono", monospace',
-                                      background: '#0A0A0A',
-                                      color: '#FAFAFA',
-                                      border: 'none',
-                                      cursor: 'pointer',
-                                    }}
-                                  >
-                                    SHARE WITH {person.toUpperCase()} ↗
-                                  </button>
-                                </div>
-                              </div>
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
-                      </div>
-                    );
-                  })}
-
-                  {/* Unassigned */}
-                  {unassigned && (
-                    <div style={{ borderBottom: `1px dotted ${rule}` }}>
                       <button
-                        onClick={() =>
-                          setExpandedPerson(
-                            expandedPerson === 'unassigned' ? null : 'unassigned'
-                          )
-                        }
+                        key={person}
+                        onClick={() => setExpandedPerson(isExpanded ? null : person)}
                         style={{
-                          width: '100%',
-                          display: 'flex',
-                          alignItems: 'center',
-                          padding: '10px 0',
-                          background: 'none',
-                          border: 'none',
+                          width: 'calc(50% - 4px)',
+                          padding: '12px',
+                          background: isExpanded ? '#F0F0F0' : 'transparent',
+                          border: `1px solid ${isExpanded ? '#0A0A0A' : rule}`,
                           cursor: 'pointer',
                           fontFamily: '"IBM Plex Mono", monospace',
                           textAlign: 'left',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          gap: '8px',
+                          transition: 'all 0.15s',
                         }}
                       >
-                        <span style={{ width: '18px', fontSize: '10px', color: inkLight, flexShrink: 0 }}>
-                          {expandedPerson === 'unassigned' ? '▾' : '▸'}
-                        </span>
-                        <span
-                          style={{
-                            flex: 1,
-                            fontSize: '12px',
-                            fontWeight: 600,
-                            letterSpacing: '0.08em',
-                            textTransform: 'uppercase',
-                            color: inkLight,
-                          }}
-                        >
-                          UNASSIGNED
-                        </span>
-                        <span
-                          style={{
-                            fontSize: '14px',
-                            fontWeight: 600,
-                            fontVariantNumeric: 'tabular-nums',
-                            color: inkLight,
-                          }}
-                        >
-                          {formatCurrency(receipt.currency)} {unassigned.total.toFixed(2)}
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '7px' }}>
+                          <svg width="11" height="15" viewBox="0 0 11 15" fill="none" style={{ flexShrink: 0 }}>
+                            <rect x="0" y="0" width="11" height="11" fill={isExpanded ? '#0A0A0A' : inkMid} rx="1"/>
+                            <path d="M0 11 L1.375 14 L2.75 11 L4.125 14 L5.5 11 L6.875 14 L8.25 11 L9.625 14 L11 11 Z" fill={isExpanded ? '#0A0A0A' : inkMid}/>
+                            <rect x="2" y="2.5" width="7" height="1" fill="#FAFAFA" rx="0.5"/>
+                            <rect x="2" y="5" width="5" height="1" fill="#FAFAFA" rx="0.5"/>
+                            <rect x="2" y="7.5" width="6" height="1" fill="#FAFAFA" rx="0.5"/>
+                          </svg>
+                          <span style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: isExpanded ? '#0A0A0A' : inkMid, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                            {person}
+                          </span>
+                        </div>
+                        <span style={{ fontSize: '14px', fontWeight: 700, fontVariantNumeric: 'tabular-nums', color: '#0A0A0A', letterSpacing: '0.02em' }}>
+                          {formatCurrency(receipt.currency)} {breakdown.total.toFixed(2)}
                         </span>
                       </button>
-                    </div>
-                  )}
-
-                  {people.length === 0 && !unassigned && (
-                    <p style={{ fontSize: '10px', color: inkLight, padding: '16px 0' }}>
-                      NO ASSIGNMENTS YET
-                    </p>
-                  )}
+                    );
+                  })}
                 </div>
+
+                {/* Expanded mini receipt - full width below cards */}
+                <AnimatePresence>
+                  {expandedPerson && personTotals[expandedPerson] && (
+                    <motion.div
+                      key={expandedPerson}
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      style={{ overflow: 'hidden' }}
+                    >
+                      <div style={{ marginTop: '8px', border: `1px dashed ${rule}`, background: '#F0F0F0' }}>
+                        {/* Header */}
+                        <div style={{ padding: '8px 12px', borderBottom: `1px dashed ${rule}`, textAlign: 'center' }}>
+                          <div style={{ fontSize: '9px', letterSpacing: '0.2em', color: inkLight }}>YOUR SHARE</div>
+                          <div style={{ fontSize: '13px', fontWeight: 700, letterSpacing: '0.08em', color: '#0A0A0A' }}>
+                            {expandedPerson.toUpperCase()}
+                          </div>
+                        </div>
+                        {/* Items */}
+                        <div style={{ padding: '8px 12px', borderBottom: `1px dashed ${rule}` }}>
+                          {personTotals[expandedPerson].items.map((item: { name: string; share: number; splitCount: number }, idx: number) => (
+                            <div key={idx} style={{ display: 'flex', alignItems: 'center', fontSize: '10px', color: inkMid, padding: '3px 0' }}>
+                              <span style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', paddingRight: '8px' }}>
+                                {item.name.toUpperCase()}
+                                {item.splitCount > 1 && (
+                                  <span style={{ fontSize: '9px', color: inkLight, fontStyle: 'italic', marginLeft: '6px', textTransform: 'lowercase' }}>({splitLabel(item.splitCount)})</span>
+                                )}
+                              </span>
+                              <span style={{ fontVariantNumeric: 'tabular-nums', flexShrink: 0 }}>
+                                {formatCurrency(receipt.currency)} {item.share.toFixed(2)}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                        {/* Totals */}
+                        <div style={{ padding: '8px 12px', fontSize: '10px', color: inkMid, borderBottom: `1px dashed ${rule}` }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', padding: '2px 0' }}>
+                            <span>SUBTOTAL {receipt.itemsIncludeTax && <span style={{ color: inkLight }}>(TAX INCL.)</span>}</span>
+                            <span style={{ fontVariantNumeric: 'tabular-nums' }}>{formatCurrency(receipt.currency)} {personTotals[expandedPerson].subtotal.toFixed(2)}</span>
+                          </div>
+                          {!receipt.itemsIncludeTax && (
+                            <div style={{ display: 'flex', justifyContent: 'space-between', padding: '2px 0' }}>
+                              <span>TAX</span>
+                              <span style={{ fontVariantNumeric: 'tabular-nums' }}>{formatCurrency(receipt.currency)} {personTotals[expandedPerson].tax.toFixed(2)}</span>
+                            </div>
+                          )}
+                          <div style={{ display: 'flex', justifyContent: 'space-between', padding: '2px 0' }}>
+                            <span>TIP</span>
+                            <span style={{ fontVariantNumeric: 'tabular-nums' }}>{formatCurrency(receipt.currency)} {personTotals[expandedPerson].tip.toFixed(2)}</span>
+                          </div>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 0 2px', marginTop: '4px', borderTop: `1px solid #0A0A0A`, fontWeight: 700, fontSize: '12px', color: '#0A0A0A' }}>
+                            <span>TOTAL</span>
+                            <span style={{ fontVariantNumeric: 'tabular-nums' }}>{formatCurrency(receipt.currency)} {personTotals[expandedPerson].total.toFixed(2)}</span>
+                          </div>
+                        </div>
+                        {/* Share button */}
+                        <div style={{ padding: '10px 12px', textAlign: 'center' }}>
+                          <button
+                            onClick={() => handleShare(expandedPerson, personTotals[expandedPerson])}
+                            style={{
+                              width: '100%',
+                              padding: '8px',
+                              fontSize: '10px',
+                              letterSpacing: '0.2em',
+                              textTransform: 'uppercase',
+                              fontWeight: 700,
+                              fontFamily: '"IBM Plex Mono", monospace',
+                              background: '#0A0A0A',
+                              color: '#FAFAFA',
+                              border: 'none',
+                              cursor: 'pointer',
+                            }}
+                          >
+                            SHARE WITH {expandedPerson.toUpperCase()} ↗
+                          </button>
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
+                {/* Unassigned */}
+                {unassigned && (
+                  <div style={{ marginTop: '12px', borderTop: `1px dotted ${rule}`, paddingTop: '8px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '6px 0' }}>
+                      <span style={{ fontSize: '10px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: inkLight }}>
+                        UNASSIGNED
+                      </span>
+                      <span style={{ fontSize: '12px', fontWeight: 600, fontVariantNumeric: 'tabular-nums', color: inkLight }}>
+                        {formatCurrency(receipt.currency)} {unassigned.total.toFixed(2)}
+                      </span>
+                    </div>
+                  </div>
+                )}
+
+                {people.length === 0 && !unassigned && (
+                  <p style={{ fontSize: '10px', color: inkLight, padding: '16px 0' }}>
+                    NO ASSIGNMENTS YET
+                  </p>
+                )}
               </div>
             </>
           )}
