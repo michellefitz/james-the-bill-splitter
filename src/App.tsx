@@ -994,8 +994,218 @@ export default function App() {
                 </div>
               </div>
 
+              {/* ── Tip panel ───────────────────────────────────────── */}
+              <div style={{ marginTop: '24px' }}>
+                <button
+                  onClick={() => setIsTipPanelOpen(!isTipPanelOpen)}
+                  style={{
+                    padding: '7px 16px',
+                    fontSize: '10px',
+                    letterSpacing: '0.2em',
+                    textTransform: 'uppercase',
+                    fontWeight: 700,
+                    fontFamily: '"IBM Plex Mono", monospace',
+                    border: `1px solid ${amber}`,
+                    background: isTipPanelOpen ? amber : 'transparent',
+                    color: isTipPanelOpen ? '#FAFAFA' : amber,
+                    cursor: 'pointer',
+                    transition: 'all 0.15s',
+                  }}
+                >
+                  {isTipPanelOpen
+                    ? '[ CLOSE TIP ]'
+                    : (tipMode === 'percentage' ? tipRate > 0 : parseFloat(customTipAmount) > 0)
+                      ? '[ EDIT TIP ]'
+                      : '[ + ADD TIP ]'}
+                </button>
+
+                <AnimatePresence>
+                  {isTipPanelOpen && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      style={{ overflow: 'hidden' }}
+                    >
+                      <div style={{ paddingTop: '16px', paddingBottom: '4px' }}>
+                        {/* Mode toggle */}
+                        <div style={{ display: 'flex', marginBottom: '14px' }}>
+                          {(['percentage', 'amount'] as const).map((mode) => (
+                            <button
+                              key={mode}
+                              onClick={() => setTipMode(mode)}
+                              style={{
+                                flex: 1,
+                                padding: '7px',
+                                fontSize: '10px',
+                                letterSpacing: '0.15em',
+                                textTransform: 'uppercase',
+                                fontWeight: 700,
+                                fontFamily: '"IBM Plex Mono", monospace',
+                                border: `1px solid #0A0A0A`,
+                                background: tipMode === mode ? '#0A0A0A' : 'transparent',
+                                color: tipMode === mode ? '#FAFAFA' : '#0A0A0A',
+                                cursor: 'pointer',
+                                transition: 'all 0.15s',
+                              }}
+                            >
+                              {mode === 'percentage' ? 'PERCENT' : 'AMOUNT'}
+                            </button>
+                          ))}
+                        </div>
+
+                        {tipMode === 'percentage' ? (
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                            <div style={{ display: 'flex', gap: '4px' }}>
+                              {[10, 15, 18, 20, 25].map((rate) => (
+                                <button
+                                  key={rate}
+                                  onClick={() => setTipRate(rate)}
+                                  style={{
+                                    flex: 1,
+                                    padding: '7px 0',
+                                    fontSize: '10px',
+                                    fontWeight: 700,
+                                    fontFamily: '"IBM Plex Mono", monospace',
+                                    border: `1px solid #0A0A0A`,
+                                    background: tipRate === rate ? '#0A0A0A' : 'transparent',
+                                    color: tipRate === rate ? '#FAFAFA' : '#0A0A0A',
+                                    cursor: 'pointer',
+                                    transition: 'all 0.15s',
+                                  }}
+                                >
+                                  {rate}%
+                                </button>
+                              ))}
+                            </div>
+                            <input
+                              type="range"
+                              min="0"
+                              max="40"
+                              step="1"
+                              value={tipRate}
+                              onChange={(e) => setTipRate(parseFloat(e.target.value))}
+                              style={{ width: '100%', accentColor: '#0A0A0A', cursor: 'pointer' }}
+                            />
+                            <div
+                              style={{
+                                textAlign: 'center',
+                                fontSize: '10px',
+                                letterSpacing: '0.2em',
+                                color: inkMid,
+                              }}
+                            >
+                              CUSTOM: {tipRate}%
+                            </div>
+                          </div>
+                        ) : (
+                          <div
+                            style={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              borderBottom: `1px solid ${rule}`,
+                              paddingBottom: '4px',
+                            }}
+                          >
+                            <span style={{ fontSize: '13px', color: inkMid, marginRight: '8px' }}>
+                              {formatCurrency(receipt.currency)}
+                            </span>
+                            <input
+                              type="number"
+                              value={customTipAmount}
+                              onChange={(e) => setCustomTipAmount(e.target.value)}
+                              placeholder="0.00"
+                              style={{
+                                flex: 1,
+                                padding: '6px 0',
+                                fontSize: '13px',
+                                background: 'transparent',
+                                border: 'none',
+                                outline: 'none',
+                                color: '#0A0A0A',
+                                fontFamily: '"IBM Plex Mono", monospace',
+                              }}
+                            />
+                          </div>
+                        )}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              {/* ── Grand total ──────────────────────────────────────── */}
+              <div style={{ marginTop: '24px', paddingTop: '16px', borderTop: `2px solid #0A0A0A` }}>
+                <div style={{ fontSize: '11px', color: inkMid }}>
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      padding: '3px 0',
+                    }}
+                  >
+                    <span>
+                      SUBTOTAL{' '}
+                      {receipt.itemsIncludeTax && (
+                        <span style={{ color: inkLight, fontSize: '9px' }}>(TAX INCL.)</span>
+                      )}
+                    </span>
+                    <span style={{ fontVariantNumeric: 'tabular-nums' }}>
+                      {formatCurrency(receipt.currency)}
+                      {receipt.items.reduce((a, b) => a + b.price, 0).toFixed(2)}
+                    </span>
+                  </div>
+                  {!receipt.itemsIncludeTax && (
+                    <div
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        padding: '3px 0',
+                      }}
+                    >
+                      <span>TAX</span>
+                      <span style={{ fontVariantNumeric: 'tabular-nums' }}>
+                        {formatCurrency(receipt.currency)} {(calculatedTax ?? 0).toFixed(2)}
+                      </span>
+                    </div>
+                  )}
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      padding: '3px 0',
+                    }}
+                  >
+                    <span>
+                      TIP {tipMode === 'percentage' ? `(${tipRate.toFixed(0)}%)` : ''}
+                    </span>
+                    <span style={{ fontVariantNumeric: 'tabular-nums' }}>
+                      {formatCurrency(receipt.currency)} {(calculatedTip ?? 0).toFixed(2)}
+                    </span>
+                  </div>
+                </div>
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    padding: '10px 0 4px',
+                    marginTop: '8px',
+                    borderTop: `2px solid #0A0A0A`,
+                    fontSize: '16px',
+                    fontWeight: 700,
+                    color: '#0A0A0A',
+                    letterSpacing: '0.05em',
+                  }}
+                >
+                  <span>TOTAL</span>
+                  <span style={{ fontVariantNumeric: 'tabular-nums' }}>
+                    {formatCurrency(receipt.currency)} {(calculatedTotal ?? 0).toFixed(2)}
+                  </span>
+                </div>
+              </div>
+
               {/* ── Summary ───────────────────────────────────────────── */}
-              <div style={{ padding: '20px 0', borderTop: '2px solid #0A0A0A' }}>
+              <div style={{ padding: '20px 0', borderTop: '2px solid #0A0A0A', marginTop: '24px' }}>
                 <div
                   style={{
                     fontSize: '9px',
@@ -1220,216 +1430,6 @@ export default function App() {
                       NO ASSIGNMENTS YET
                     </p>
                   )}
-                </div>
-
-                {/* ── Tip panel ───────────────────────────────────────── */}
-                <div style={{ marginTop: '24px' }}>
-                  <button
-                    onClick={() => setIsTipPanelOpen(!isTipPanelOpen)}
-                    style={{
-                      padding: '7px 16px',
-                      fontSize: '10px',
-                      letterSpacing: '0.2em',
-                      textTransform: 'uppercase',
-                      fontWeight: 700,
-                      fontFamily: '"IBM Plex Mono", monospace',
-                      border: `1px solid ${amber}`,
-                      background: isTipPanelOpen ? amber : 'transparent',
-                      color: isTipPanelOpen ? '#FAFAFA' : amber,
-                      cursor: 'pointer',
-                      transition: 'all 0.15s',
-                    }}
-                  >
-                    {isTipPanelOpen
-                      ? '[ CLOSE TIP ]'
-                      : (tipMode === 'percentage' ? tipRate > 0 : parseFloat(customTipAmount) > 0)
-                        ? '[ EDIT TIP ]'
-                        : '[ + ADD TIP ]'}
-                  </button>
-
-                  <AnimatePresence>
-                    {isTipPanelOpen && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        style={{ overflow: 'hidden' }}
-                      >
-                        <div style={{ paddingTop: '16px', paddingBottom: '4px' }}>
-                          {/* Mode toggle */}
-                          <div style={{ display: 'flex', marginBottom: '14px' }}>
-                            {(['percentage', 'amount'] as const).map((mode) => (
-                              <button
-                                key={mode}
-                                onClick={() => setTipMode(mode)}
-                                style={{
-                                  flex: 1,
-                                  padding: '7px',
-                                  fontSize: '10px',
-                                  letterSpacing: '0.15em',
-                                  textTransform: 'uppercase',
-                                  fontWeight: 700,
-                                  fontFamily: '"IBM Plex Mono", monospace',
-                                  border: `1px solid #0A0A0A`,
-                                  background: tipMode === mode ? '#0A0A0A' : 'transparent',
-                                  color: tipMode === mode ? '#FAFAFA' : '#0A0A0A',
-                                  cursor: 'pointer',
-                                  transition: 'all 0.15s',
-                                }}
-                              >
-                                {mode === 'percentage' ? 'PERCENT' : 'AMOUNT'}
-                              </button>
-                            ))}
-                          </div>
-
-                          {tipMode === 'percentage' ? (
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                              <div style={{ display: 'flex', gap: '4px' }}>
-                                {[10, 15, 18, 20, 25].map((rate) => (
-                                  <button
-                                    key={rate}
-                                    onClick={() => setTipRate(rate)}
-                                    style={{
-                                      flex: 1,
-                                      padding: '7px 0',
-                                      fontSize: '10px',
-                                      fontWeight: 700,
-                                      fontFamily: '"IBM Plex Mono", monospace',
-                                      border: `1px solid #0A0A0A`,
-                                      background: tipRate === rate ? '#0A0A0A' : 'transparent',
-                                      color: tipRate === rate ? '#FAFAFA' : '#0A0A0A',
-                                      cursor: 'pointer',
-                                      transition: 'all 0.15s',
-                                    }}
-                                  >
-                                    {rate}%
-                                  </button>
-                                ))}
-                              </div>
-                              <input
-                                type="range"
-                                min="0"
-                                max="40"
-                                step="1"
-                                value={tipRate}
-                                onChange={(e) => setTipRate(parseFloat(e.target.value))}
-                                style={{ width: '100%', accentColor: '#0A0A0A', cursor: 'pointer' }}
-                              />
-                              <div
-                                style={{
-                                  textAlign: 'center',
-                                  fontSize: '10px',
-                                  letterSpacing: '0.2em',
-                                  color: inkMid,
-                                }}
-                              >
-                                CUSTOM: {tipRate}%
-                              </div>
-                            </div>
-                          ) : (
-                            <div
-                              style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                borderBottom: `1px solid ${rule}`,
-                                paddingBottom: '4px',
-                              }}
-                            >
-                              <span style={{ fontSize: '13px', color: inkMid, marginRight: '8px' }}>
-                                {formatCurrency(receipt.currency)}
-                              </span>
-                              <input
-                                type="number"
-                                value={customTipAmount}
-                                onChange={(e) => setCustomTipAmount(e.target.value)}
-                                placeholder="0.00"
-                                style={{
-                                  flex: 1,
-                                  padding: '6px 0',
-                                  fontSize: '13px',
-                                  background: 'transparent',
-                                  border: 'none',
-                                  outline: 'none',
-                                  color: '#0A0A0A',
-                                  fontFamily: '"IBM Plex Mono", monospace',
-                                }}
-                              />
-                            </div>
-                          )}
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-
-                {/* ── Grand total ──────────────────────────────────────── */}
-                <div style={{ marginTop: '24px', paddingTop: '16px', borderTop: `2px solid #0A0A0A` }}>
-                  <div style={{ fontSize: '11px', color: inkMid }}>
-                    <div
-                      style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        padding: '3px 0',
-                      }}
-                    >
-                      <span>
-                        SUBTOTAL{' '}
-                        {receipt.itemsIncludeTax && (
-                          <span style={{ color: inkLight, fontSize: '9px' }}>(TAX INCL.)</span>
-                        )}
-                      </span>
-                      <span style={{ fontVariantNumeric: 'tabular-nums' }}>
-                        {formatCurrency(receipt.currency)}
-                        {receipt.items.reduce((a, b) => a + b.price, 0).toFixed(2)}
-                      </span>
-                    </div>
-                    {!receipt.itemsIncludeTax && (
-                      <div
-                        style={{
-                          display: 'flex',
-                          justifyContent: 'space-between',
-                          padding: '3px 0',
-                        }}
-                      >
-                        <span>TAX</span>
-                        <span style={{ fontVariantNumeric: 'tabular-nums' }}>
-                          {formatCurrency(receipt.currency)} {(calculatedTax ?? 0).toFixed(2)}
-                        </span>
-                      </div>
-                    )}
-                    <div
-                      style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        padding: '3px 0',
-                      }}
-                    >
-                      <span>
-                        TIP {tipMode === 'percentage' ? `(${tipRate.toFixed(0)}%)` : ''}
-                      </span>
-                      <span style={{ fontVariantNumeric: 'tabular-nums' }}>
-                        {formatCurrency(receipt.currency)} {(calculatedTip ?? 0).toFixed(2)}
-                      </span>
-                    </div>
-                  </div>
-                  <div
-                    style={{
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      padding: '10px 0 4px',
-                      marginTop: '8px',
-                      borderTop: `2px solid #0A0A0A`,
-                      fontSize: '16px',
-                      fontWeight: 700,
-                      color: '#0A0A0A',
-                      letterSpacing: '0.05em',
-                    }}
-                  >
-                    <span>TOTAL</span>
-                    <span style={{ fontVariantNumeric: 'tabular-nums' }}>
-                      {formatCurrency(receipt.currency)} {(calculatedTotal ?? 0).toFixed(2)}
-                    </span>
-                  </div>
                 </div>
               </div>
             </>
