@@ -888,7 +888,7 @@ export default function App() {
                           <span
                             style={{
                               fontSize: '12px',
-                              fontWeight: 500,
+                              fontWeight: isAssignedToSelected ? 700 : 500,
                               flex: 1,
                               overflow: 'hidden',
                               textOverflow: 'ellipsis',
@@ -902,7 +902,7 @@ export default function App() {
                           <span
                             style={{
                               fontSize: '12px',
-                              fontWeight: 600,
+                              fontWeight: isAssignedToSelected ? 700 : 600,
                               flexShrink: 0,
                               fontVariantNumeric: 'tabular-nums',
                               color: isAssignedToSelected ? amber : isAssigned ? '#AEAEAE' : '#0A0A0A',
@@ -920,7 +920,6 @@ export default function App() {
                               flexWrap: 'wrap',
                               gap: '4px',
                               marginTop: '6px',
-                              paddingLeft: '20px',
                             }}
                           >
                             <AnimatePresence mode="popLayout">
