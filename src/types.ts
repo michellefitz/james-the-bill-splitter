@@ -8,6 +8,7 @@ export interface ReceiptItem {
 
 export interface ReceiptData {
   restaurantName?: string;
+  date?: string;
   items: ReceiptItem[];
   tax: number;
   tip: number;
@@ -35,6 +36,7 @@ export const RECEIPT_SCHEMA = {
   type: Type.OBJECT,
   properties: {
     restaurantName: { type: Type.STRING, description: "The name of the restaurant or store" },
+    date: { type: Type.STRING, description: "The date on the receipt in a human-readable format, e.g. 'March 15, 2024'. Omit if not present." },
     items: {
       type: Type.ARRAY,
       items: {

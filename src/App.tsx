@@ -17,6 +17,7 @@ function encodeShareData(data: SharedReceiptData): string {
   const compact = {
     p: data.person,
     r: data.restaurant,
+    d: data.date,
     c: data.currency,
     i: data.items.map(it => ({ n: it.name, s: it.share, x: it.splitCount })),
     st: data.subtotal,
@@ -35,6 +36,7 @@ function decodeShareData(str: string): SharedReceiptData {
   return {
     person: d.p,
     restaurant: d.r,
+    date: d.d,
     currency: d.c,
     items: d.i.map((it: any) => ({ name: it.n, share: it.s, splitCount: it.x })),
     subtotal: d.st,
@@ -99,6 +101,7 @@ const PerforatedEdge = ({ flip = false }: { flip?: boolean }) => (
 interface SharedReceiptData {
   person: string;
   restaurant?: string;
+  date?: string;
   currency: string;
   items: { name: string; share: number; splitCount: number }[];
   subtotal: number;
@@ -129,6 +132,11 @@ const SharedReceiptView = ({ data }: { data: SharedReceiptData }) => {
             <h1 style={{ fontSize: '20px', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', color: '#0A0A0A', margin: 0 }}>
               {data.restaurant || 'THE BILL'}
             </h1>
+            {data.date && (
+              <div style={{ fontSize: '9px', letterSpacing: '0.2em', textTransform: 'uppercase', color: inkLight, marginTop: '6px' }}>
+                {data.date}
+              </div>
+            )}
           </div>
           <div style={{ fontSize: '14px', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', color: inkMid }}>
             HEY, {data.person.toUpperCase()}!
@@ -440,6 +448,7 @@ export default function App() {
     const data: SharedReceiptData = {
       person,
       restaurant: receipt?.restaurantName,
+      date: receipt?.date,
       currency: receipt?.currency || '$',
       items: breakdown.items,
       subtotal: breakdown.subtotal,
@@ -607,6 +616,11 @@ export default function App() {
               >
                 {receipt.restaurantName || 'RECEIPT'}
               </h1>
+              {receipt.date && (
+                <div style={{ fontSize: '9px', letterSpacing: '0.2em', textTransform: 'uppercase', color: inkLight, marginTop: '6px' }}>
+                  {receipt.date}
+                </div>
+              )}
             </div>
           )}
           {receipt && (

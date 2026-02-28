@@ -15,7 +15,7 @@ export async function parseReceiptImage(base64Image: string, mimeType: string): 
             mimeType: mimeType
           }
         },
-        { text: "Parse this receipt into a structured JSON format. Extract the restaurant name, all line items with their prices, the tax amount, the tip (if present), and the total. IMPORTANT: Determine if the line item prices already include tax. If they do, set the 'tax' field to the amount shown but ensure the 'total' reflects the actual final amount on the bill. If the tax is listed separately and NOT included in item prices, ensure the 'total' is the sum of items + tax + tip. If tip is not explicitly listed, set it to 0." }
+        { text: "Parse this receipt into a structured JSON format. Extract the restaurant name, the date (if present, in a human-readable format like 'March 15, 2024'), all line items with their prices, the tax amount, the tip (if present), and the total. IMPORTANT: Determine if the line item prices already include tax. If they do, set the 'tax' field to the amount shown but ensure the 'total' reflects the actual final amount on the bill. If the tax is listed separately and NOT included in item prices, ensure the 'total' is the sum of items + tax + tip. If tip is not explicitly listed, set it to 0." }
       ]
     },
     config: {
