@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { ReceiptData, Assignment } from './types';
-import { parseReceiptImage } from './services/gemini';
+import { parseReceiptImage, processChatCommand } from './services/gemini';
 
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -285,7 +285,10 @@ export default function App() {
   const [isTipPanelOpen, setIsTipPanelOpen] = useState(false);
   const [loadingMsgIndex, setLoadingMsgIndex] = useState(0);
   const [sharedReceiptData, setSharedReceiptData] = useState<SharedReceiptData | null>(null);
+  const [isListening, setIsListening] = useState(false);
+  const [isVoiceProcessing, setIsVoiceProcessing] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const recognitionRef = useRef<any>(null);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -342,6 +345,62 @@ export default function App() {
       setIsUploading(false);
     }
   };
+
+  const processVoiceCommand = async (transcript: string) => {
+    if (!receipt) return;
+    setIsVoiceProcessing(true);
+    try {
+      const result = await processChatCommand(transcript, receipt.items, people, assignments);
+
+      const toAdd = (result.newPeople || []).filter((p: string) => !people.includes(p));
+      if (toAdd.length) setPeople(prev => [...prev, ...toAdd]);
+
+      if (result.assignments?.length) {
+        setAssignments(prev => {
+          const updated = prev.map((a: Assignment) => ({ ...a, people: [...a.people] }));
+          for (const cmd of result.assignments) {
+            const matched = receipt.items.find(item =>
+              item.name.toLowerCase().includes(cmd.itemName.toLowerCase()) ||
+              cmd.itemName.toLowerCase().includes(item.name.toLowerCase())
+            );
+            if (!matched) continue;
+            const idx = updated.findIndex((a: Assignment) => a.itemId === matched.id);
+            if (idx < 0) continue;
+            if (cmd.action === 'set') {
+              updated[idx].people = cmd.people;
+            } else if (cmd.action === 'add') {
+              for (const p of cmd.people)
+                if (!updated[idx].people.includes(p)) updated[idx].people.push(p);
+            } else if (cmd.action === 'remove') {
+              updated[idx].people = updated[idx].people.filter((p: string) => !cmd.people.includes(p));
+            }
+          }
+          return updated;
+        });
+      }
+    } catch (err) {
+      console.error('Voice error:', err);
+    } finally {
+      setIsVoiceProcessing(false);
+    }
+  };
+
+  const startListening = () => {
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SR || !receipt) return;
+    const r = new SR();
+    r.continuous = false;
+    r.interimResults = false;
+    r.lang = 'en-US';
+    r.onresult = (e: any) => processVoiceCommand(e.results[0][0].transcript);
+    r.onerror = () => setIsListening(false);
+    r.onend = () => setIsListening(false);
+    recognitionRef.current = r;
+    r.start();
+    setIsListening(true);
+  };
+
+  const stopListening = () => { recognitionRef.current?.stop(); };
 
   const handleAddPerson = (e?: React.FormEvent) => {
     e?.preventDefault();
@@ -788,6 +847,41 @@ export default function App() {
                 </motion.p>
               ) : null}
             </AnimatePresence>
+
+            {(window.SpeechRecognition || window.webkitSpeechRecognition) && (
+              <motion.button
+                onPointerDown={startListening}
+                onPointerUp={stopListening}
+                onPointerLeave={stopListening}
+                disabled={isVoiceProcessing}
+                animate={isListening ? { scale: [1, 1.03, 1] } : { scale: 1 }}
+                transition={isListening ? { repeat: Infinity, duration: 0.8 } : {}}
+                style={{
+                  marginTop: '14px',
+                  width: '100%',
+                  padding: '10px 16px',
+                  fontSize: '9px',
+                  letterSpacing: '0.25em',
+                  textTransform: 'uppercase',
+                  fontWeight: 700,
+                  fontFamily: '"IBM Plex Mono", monospace',
+                  border: isListening ? '1.5px solid #CC0000' : `1px solid ${rule}`,
+                  background: isListening ? '#CC0000' : 'transparent',
+                  color: isListening ? '#FAFAFA' : isVoiceProcessing ? inkMid : inkMid,
+                  cursor: isVoiceProcessing ? 'default' : 'pointer',
+                  transition: 'background 0.15s, border-color 0.15s, color 0.15s',
+                  touchAction: 'none',
+                  userSelect: 'none',
+                  WebkitUserSelect: 'none',
+                }}
+              >
+                {isVoiceProcessing
+                  ? '◌ JAMES IS THINKING...'
+                  : isListening
+                  ? '● LISTENING...'
+                  : '🎤 PRESS & HOLD TO TALK'}
+              </motion.button>
+            )}
           </div>}
 
           {/* ── No receipt state ────────────────────────────────────────── */}

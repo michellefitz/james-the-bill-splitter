@@ -44,17 +44,18 @@ export async function processChatCommand(
 ) {
   const ai = getAI();
   const context = `
-    Current Items: ${JSON.stringify(items)}
+    Receipt Items: ${JSON.stringify(items.map((i: any) => ({ id: i.id, name: i.name })))}
     Current People: ${JSON.stringify(currentPeople)}
     Current Assignments: ${JSON.stringify(currentAssignments)}
-    
-    User Command: "${message}"
-    
+
+    User said: "${message}"
+
     Instructions:
-    1. Identify which items the user is talking about. Match item names loosely.
-    2. Identify which people are being assigned to those items.
-    3. If a new person is mentioned, add them to 'newPeople'.
-    4. Return a list of assignment updates.
+    1. Match item names loosely (e.g. "burger" matches "Cheese Burger $12").
+    2. Identify people and what they ordered.
+    3. Any name not in Current People → add to newPeople.
+    4. Use action "set" when a person is described as having an item (voice input).
+    5. Return assignments for every mentioned item.
   `;
 
   const response = await ai.models.generateContent({
