@@ -285,7 +285,6 @@ export default function App() {
   const [isTipPanelOpen, setIsTipPanelOpen] = useState(false);
   const [loadingMsgIndex, setLoadingMsgIndex] = useState(0);
   const [sharedReceiptData, setSharedReceiptData] = useState<SharedReceiptData | null>(null);
-  const [checkedItems, setCheckedItems] = useState<Set<string>>(new Set());
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -885,37 +884,7 @@ export default function App() {
                         }}
                       >
                         {/* Item row */}
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setCheckedItems(prev => {
-                                const next = new Set(prev);
-                                next.has(item.id) ? next.delete(item.id) : next.add(item.id);
-                                return next;
-                              });
-                            }}
-                            style={{
-                              flexShrink: 0,
-                              width: '16px',
-                              height: '16px',
-                              border: `1.5px solid ${checkedItems.has(item.id) ? '#0A0A0A' : '#BDBDBD'}`,
-                              background: checkedItems.has(item.id) ? '#0A0A0A' : 'transparent',
-                              cursor: 'pointer',
-                              display: 'flex',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              padding: 0,
-                              transition: 'all 0.15s',
-                              borderRadius: '2px',
-                            }}
-                          >
-                            {checkedItems.has(item.id) && (
-                              <svg width="9" height="7" viewBox="0 0 9 7" fill="none">
-                                <path d="M1 3.5L3.5 6L8 1" stroke="#FAFAFA" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                              </svg>
-                            )}
-                          </button>
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
                           <span
                             style={{
                               fontSize: '12px',
@@ -925,9 +894,7 @@ export default function App() {
                               textOverflow: 'ellipsis',
                               whiteSpace: 'nowrap',
                               paddingRight: '8px',
-                              color: checkedItems.has(item.id) ? '#BDBDBD' : isAssigned && !isAssignedToSelected ? '#AEAEAE' : '#0A0A0A',
-                              textDecoration: checkedItems.has(item.id) ? 'line-through' : 'none',
-                              transition: 'color 0.15s',
+                              color: isAssigned && !isAssignedToSelected ? '#AEAEAE' : '#0A0A0A',
                             }}
                           >
                             {item.name.toUpperCase()}
@@ -938,9 +905,7 @@ export default function App() {
                               fontWeight: isAssignedToSelected ? 700 : 600,
                               flexShrink: 0,
                               fontVariantNumeric: 'tabular-nums',
-                              color: checkedItems.has(item.id) ? '#BDBDBD' : isAssignedToSelected ? amber : isAssigned ? '#AEAEAE' : '#0A0A0A',
-                              textDecoration: checkedItems.has(item.id) ? 'line-through' : 'none',
-                              transition: 'color 0.15s',
+                              color: isAssignedToSelected ? amber : isAssigned ? '#AEAEAE' : '#0A0A0A',
                             }}
                           >
                             {formatCurrency(receipt.currency)} {item.price.toFixed(2)}
